@@ -6,7 +6,7 @@ CREATE table if not exists airport_types (
 	name VARCHAR(15) NOT NULL
 );
 
-INSERT INTO airport_types VALUES 
+INSERT INTO airport_types (name) VALUES 
 ('international'),
 ('regional'),
 ('hub');
@@ -17,7 +17,7 @@ CREATE TABLE if not exists airports (
 	city VARCHAR(20) NOT NULL,
 	country VARCHAR(20) NOT NULL,
 	airport_type_id BIGINT NOT NULL,
-	FOREIGN KEY (airport_type_id) REFERENCES airport_types(id) ON DELETE RESTRICT ON UPDATE CASCADE 
+	FOREIGN KEY (airport_type_id) REFERENCES airport_types(id) ON DELETE NO ACTION ON UPDATE CASCADE 
 );
 
 INSERT INTO airports (name, city, country, airport_type_id) VALUES 
@@ -27,7 +27,8 @@ INSERT INTO airports (name, city, country, airport_type_id) VALUES
 
 CREATE table if not exists passports (
 	id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT UNIQUE,
-	number VARCHAR(10) NOT NULL UNIQUE);
+	number VARCHAR(10) NOT NULL UNIQUE
+	);
 	
 INSERT INTO passports (number) VALUES 
 ('AA234567'),
@@ -42,7 +43,7 @@ CREATE TABLE if not exists passengers (
 	phone_number VARCHAR(15) NOT NULL,
 	email VARCHAR(25) NOT NULL,
 	passport_id BIGINT NOT NULL,
-	CONSTRAINT fk_passenger_passport FOREIGN KEY (passport_id) REFERENCES passports(id) ON DELETE RESTRICT ON UPDATE CASCADE
+	CONSTRAINT fk_passenger_passport FOREIGN KEY (passport_id) REFERENCES passports(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 INSERT INTO passengers (first_name, last_name, age, phone_number, email, passport_id) VALUES 
@@ -53,7 +54,7 @@ INSERT INTO passengers (first_name, last_name, age, phone_number, email, passpor
 CREATE table if not exists arrivals (
 	id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT UNIQUE,
     airport_id BIGINT NOT NULL UNIQUE,
-	CONSTRAINT fk_airport_arrival FOREIGN KEY (airport_id) REFERENCES airports(id) ON DELETE RESTRICT ON UPDATE CASCADE
+	CONSTRAINT fk_airport_arrival FOREIGN KEY (airport_id) REFERENCES airports(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 INSERT INTO arrivals (airport_id) VALUES 
@@ -62,7 +63,7 @@ INSERT INTO arrivals (airport_id) VALUES
 CREATE table if not exists departures (
 	id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT UNIQUE,
     airport_id BIGINT NOT NULL UNIQUE,
-	CONSTRAINT fk_airport_departure FOREIGN KEY (airport_id) REFERENCES airports(id) ON DELETE RESTRICT ON UPDATE CASCADE
+	CONSTRAINT fk_airport_departure FOREIGN KEY (airport_id) REFERENCES airports(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 INSERT INTO departures (airport_id) VALUES 
@@ -78,47 +79,47 @@ INSERT INTO plane_types (name, seats_number) VALUES
 ('Boing-737', 350),
 ('Airbus-320', 180);
 
+CREATE TABLE if not exists luggage_tariffs (
+	id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT UNIQUE,
+	hand_luggage_price DOUBLE NOT NULL,
+	register_luggage_price DOUBLE NOT NULL
+);
+
+INSERT INTO luggage_tariffs (hand_luggage_price, register_luggage_price) VALUES 
+(15.0, 25.0),
+(10.5, 18.5);
+
 CREATE table if not exists airlines (
 	id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT UNIQUE,
 	name VARCHAR(40) NOT NULL UNIQUE,
-	code VARCHAR(3) NOT NULL UNIQUE
+	code VARCHAR(3) NOT NULL UNIQUE,
+	luggage_tariff_id BIGINT NOT NULL,
+	CONSTRAINT fk_airline_lagguage_tariff FOREIGN KEY (luggage_tariff_id) REFERENCES luggage_tariffs(id) ON DELETE CASCADE ON UPDATE CASCADE
+	
 );
 
-INSERT INTO airlines (name, code) VALUES 
-('KLM Royal Dutch Airlines', 'KLM'),
-('Ryanair', 'RYR');
+INSERT INTO airlines (name, code, luggage_tariff_id) VALUES 
+('KLM Royal Dutch Airlines', 'KLM',1),
+('Ryanair', 'RYR',2);
 
 CREATE TABLE if not exists flights (
 	id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT UNIQUE,
 	number VARCHAR(4) NOT NULL,
-	departure_time TIMESTAMP NOT NULL,
-	arrival_time TIMESTAMP NOT NULL,
+	departure_time VARCHAR(20) NOT NULL,
+	arrival_time VARCHAR(20) NOT NULL,
 	airline_id BIGINT NOT NULL,
 	departure_id BIGINT NOT NULL,
 	arrival_id BIGINT NOT NULL,
 	plane_type_id BIGINT NOT NULL,
-	FOREIGN KEY (airline_id) REFERENCES airlines(id) ON DELETE RESTRICT ON UPDATE CASCADE,
+	FOREIGN KEY (airline_id) REFERENCES airlines(id) ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY (departure_id) REFERENCES departures(id) ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY (arrival_id) REFERENCES arrivals(id) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY (plane_type_id) REFERENCES plane_types(id) ON DELETE RESTRICT ON UPDATE CASCADE
+	FOREIGN KEY (plane_type_id) REFERENCES plane_types(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 INSERT INTO flights (number, departure_time, arrival_time, airline_id, departure_id, arrival_id, plane_type_id) VALUES 
 ('0035', '2023-12-19 12:35:00', '2023-12-19 13:50:00', 1, 1, 2, 1),
 ('0141', '2023-12-24 16:10:00', '2023-12-24 17:45:00', 2, 2, 3, 2);
-
-
-CREATE TABLE if not exists lagguage_tariffs (
-	id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT UNIQUE,
-	hand_lagguage_price DOUBLE NOT NULL,
-	register_lagguage_price DOUBLE NOT NULL,
-	airline_id BIGINT NOT NULL,
-	CONSTRAINT fk_airline_lagguage_tariff FOREIGN KEY (airline_id) REFERENCES airlines(id) ON DELETE RESTRICT ON UPDATE CASCADE
-);
-
-INSERT INTO lagguage_tariffs (hand_lagguage_price, register_lagguage_price, airline_id) VALUES 
-(15.0, 25.0, 1),
-(10.5, 18.5, 2);
 
 CREATE TABLE if not exists flight_types (
 	id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT UNIQUE,
@@ -133,8 +134,8 @@ INSERT INTO flight_types (type) VALUES
 CREATE TABLE if not exists airlines_has_flight_types (
 	airline_id BIGINT NOT NULL,
 	flight_type_id BIGINT NOT NULL,
-	FOREIGN KEY (airline_id) REFERENCES airlines(id) ON DELETE RESTRICT ON UPDATE CASCADE,
-	FOREIGN KEY (flight_type_id) REFERENCES flight_types(id) ON DELETE RESTRICT ON UPDATE CASCADE
+	FOREIGN KEY (airline_id) REFERENCES airlines(id) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (flight_type_id) REFERENCES flight_types(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 INSERT INTO airlines_has_flight_types (airline_id, flight_type_id) VALUES
@@ -144,18 +145,18 @@ INSERT INTO airlines_has_flight_types (airline_id, flight_type_id) VALUES
 
 CREATE TABLE if not exists service_classes (
 	id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT UNIQUE,
-	class VARCHAR(20) NOT NULL UNIQUE
+	name VARCHAR(20) NOT NULL UNIQUE
 );
 
-INSERT INTO service_classes (class) VALUES
+INSERT INTO service_classes (name) VALUES
 ('business'),
 ('economy');
 
 CREATE TABLE if not exists tariffs (
 	id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT UNIQUE,
 	name VARCHAR(30) NOT NULL,
-	hand_lagguage INT NOT NULL,
-	register_lagguage INT NOT NULL,
+	hand_luggage INT NOT NULL,
+	register_luggage INT NOT NULL,
 	place_choice TINYINT NOT NULL,
 	fast_track TINYINT NOT NULL,
 	priority_boarding TINYINT NOT NULL,
@@ -166,7 +167,8 @@ CREATE TABLE if not exists tariffs (
 	FOREIGN KEY (service_class_id) REFERENCES service_classes(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-INSERT INTO tariffs (name, hand_lagguage, register_lagguage, place_choice, fast_track, priority_boarding, airline_id, service_class_id, base_price) VALUES 
+INSERT INTO tariffs (name, hand_luggage, register_luggage, place_choice, fast_track, priority_boarding, 
+airline_id, service_class_id, base_price) VALUES 
 ('Economy Saver', 1, 0, 0, 0, 0, 1, 2, 134.5),
 ('Economy Standard', 1, 1, 1, 0, 0, 1, 2, 154.5),
 ('Business Full Flex', 2, 2, 1, 1, 1, 1, 1, 200.0),
@@ -183,7 +185,7 @@ CREATE TABLE if not exists tickets (
 	tariff_id BIGINT NOT NULL,
 	price DOUBLE NOT NULL,
 	CONSTRAINT fk_ticket_tariff FOREIGN KEY (tariff_id) REFERENCES tariffs(id) ON DELETE CASCADE ON UPDATE CASCADE,
-	CONSTRAINT fk_ticket_passenger FOREIGN KEY (passenger_id) REFERENCES passengers(id) ON DELETE RESTRICT ON UPDATE CASCADE,
+	CONSTRAINT fk_ticket_passenger FOREIGN KEY (passenger_id) REFERENCES passengers(id) ON DELETE CASCADE ON UPDATE CASCADE,
 	CONSTRAINT fk_ticket_flight FOREIGN KEY (flight_id) REFERENCES flights(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
