@@ -1,3 +1,5 @@
+block2-avia-booking/src/main/resources/config.properties
+
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/

@@ -1,9 +1,11 @@
 package com.laba.solvd.domain;
 
+import java.util.Objects;
+
 public class Passenger {
     private long id;
-    private String first_name;
-    private String last_name;
+    private String firstName;
+    private String lastName;
     private int age;
     private String phoneNumber;
     private String email;
@@ -11,11 +13,41 @@ public class Passenger {
 
     public Passenger(String first_name, String last_name, int age, String phoneNumber,
                      String email) {
-        this.first_name = first_name;
-        this.last_name = last_name;
+        this.firstName = first_name;
+        this.lastName = last_name;
         this.age = age;
         this.phoneNumber = phoneNumber;
         this.email = email;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Passenger passenger = (Passenger) o;
+        return Objects.equals(firstName, passenger.firstName)
+                && Objects.equals(lastName, passenger.lastName)
+                && Objects.equals(passport, passenger.passport);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstName, lastName, passport);
+    }
+
+    @Override
+    public String toString() {
+        return "Passenger{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", age=" + age +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", email='" + email + '\'' +
+                ", passport=" + passport.toString() +
+                '}';
+    }
+
+    public Passenger() {
     }
 
     public long getId() {
@@ -26,20 +58,20 @@ public class Passenger {
         this.id = id;
     }
 
-    public String getFirst_name() {
-        return first_name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getLast_name() {
-        return last_name;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public int getAge() {

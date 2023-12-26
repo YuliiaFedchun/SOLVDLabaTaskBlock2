@@ -1,19 +1,19 @@
 package com.laba.solvd.domain;
 
-import com.laba.solvd.domain.enums.AirportClass;
+import com.laba.solvd.domain.enums.AirportType;
 
 public class Airport {
     private long id;
     private String name;
     private String city;
     private String country;
-    private AirportClass class_name;
+    private AirportType typeName;
 
-    public Airport(String name, String city, String country, AirportClass class_name) {
+    public Airport(String name, String city, String country, AirportType typeName) {
         this.name = name;
         this.city = city;
         this.country = country;
-        this.class_name = class_name;
+        this.typeName = typeName;
     }
 
     public long getId() {
@@ -48,11 +48,11 @@ public class Airport {
         this.country = country;
     }
 
-    public AirportClass getClass_name() {
-        return class_name;
+    public AirportType getTypeName() {
+        return typeName;
     }
 
-    public void setClass_name(AirportClass class_name) {
-        this.class_name = class_name;
+    public void setTypeName(AirportType typeName) {
+        this.typeName = typeName;
     }
 }

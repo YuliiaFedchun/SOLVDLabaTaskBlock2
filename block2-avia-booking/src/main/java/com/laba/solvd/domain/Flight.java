@@ -21,6 +21,9 @@ public class Flight {
         this.planeType = planeType;
     }
 
+    public Flight() {
+    }
+
     public long getId() {
         return id;
     }

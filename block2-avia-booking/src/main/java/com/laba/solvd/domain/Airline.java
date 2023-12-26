@@ -17,6 +17,9 @@ public class Airline {
         this.flightTypes = flightTypes;
     }
 
+    public Airline() {
+    }
+
     public long getId() {
         return id;
     }

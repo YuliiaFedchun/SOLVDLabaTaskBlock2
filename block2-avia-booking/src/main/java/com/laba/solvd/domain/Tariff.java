@@ -60,7 +60,7 @@ public class Tariff {
         this.registerLuggage = registerLuggage;
     }
 
-    public boolean isPlaceChoice() {
+    public boolean hasPlaceChoice() {
         return placeChoice;
     }
 
@@ -68,7 +68,7 @@ public class Tariff {
         this.placeChoice = placeChoice;
     }
 
-    public boolean isFastTrack() {
+    public boolean hasFastTrack() {
         return fastTrack;
     }
 
@@ -76,7 +76,7 @@ public class Tariff {
         this.fastTrack = fastTrack;
     }
 
-    public boolean isPriorityBoarding() {
+    public boolean hasPriorityBoarding() {
         return priorityBoarding;
     }
 

@@ -1,13 +1,14 @@
 package com.laba.solvd.domain.enums;
 
-public enum AirportClass {
+public enum AirportType {
     INTERNATIONAL(1L, "international"),
     REGIONAL(2L, "regional"),
     HUB(3L, "hub");
 
     private final long id;
     private final String name;
-    AirportClass(long id, String name) {
+
+    AirportType(long id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -20,4 +21,5 @@ public enum AirportClass {
     public long getId() {
         return id;
     }
+
 }
