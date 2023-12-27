@@ -29,20 +29,29 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    public Ticket create(Ticket ticket) {
+    public Ticket create(Ticket ticket, Long passengerId, Long flightId) {
         ticket.setId(0);
         Passenger passenger = ticket.getPassenger();
         Flight flight = ticket.getFlight();
         if (passenger != null &&
-                passengerService.findById(passenger.getId()).equals(passenger)) {
+                passengerService.findById(passengerId).equals(passenger)) {
             if (ticket.getFlight() != null &&
-                    flightService.findById(flight.getId()).equals(flight)) {
+                    flightService.findById(flightId).equals(flight)) {
                 ticketRepository.create(ticket);
             } else {
-                LOGGER.info("You have to create flight first");
+                LOGGER.info("Incorrect flight");
             }
         } else {
-            LOGGER.info("You have to create passenger first");
+            LOGGER.info("Incorrect passenger");
+        }
+        if(ticket.getTariff() != null) {
+            Tariff tariff = tariffService.findByName(ticket.getTariff().getName(),
+                    flight.getAirline().getId());
+            if (tariff != null) {
+                ticket.setTariff(tariff);
+            } else {
+                LOGGER.info("Incorrect tariff");
+            }
         }
 
         return ticket;

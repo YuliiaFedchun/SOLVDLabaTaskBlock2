@@ -9,6 +9,7 @@ public class PlaneType {
         this.name = name;
         this.seatsNumber = seatsNumber;
     }
+    public PlaneType(){}
 
     public long getId() {
         return id;
@@ -32,5 +33,12 @@ public class PlaneType {
 
     public void setSeatsNumber(int seatsNumber) {
         this.seatsNumber = seatsNumber;
+    }
+
+    @Override
+    public String toString() {
+        return "PlaneType{" +
+                "name='" + name + '\'' +
+                '}';
     }
 }

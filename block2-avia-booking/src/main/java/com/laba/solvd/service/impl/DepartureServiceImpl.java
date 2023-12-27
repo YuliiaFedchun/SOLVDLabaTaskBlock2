@@ -15,4 +15,9 @@ public class DepartureServiceImpl implements DepartureService {
     public void create(Long airportId) {
         departureRepository.create(airportId);
     }
+
+    @Override
+    public Long getDepartureId(Long airportId) {
+        return departureRepository.getDepartureId(airportId);
+    }
 }

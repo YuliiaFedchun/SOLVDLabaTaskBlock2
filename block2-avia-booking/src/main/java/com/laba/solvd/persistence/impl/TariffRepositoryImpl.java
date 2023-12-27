@@ -1,10 +1,14 @@
 package com.laba.solvd.persistence.impl;
 
+import com.laba.solvd.domain.Flight;
 import com.laba.solvd.domain.Tariff;
+import com.laba.solvd.domain.enums.ServiceClass;
 import com.laba.solvd.persistence.ConnectionPool;
 import com.laba.solvd.persistence.repository.TariffRepository;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TariffRepositoryImpl implements TariffRepository {
     private static final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
@@ -38,5 +42,55 @@ public class TariffRepositoryImpl implements TariffRepository {
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
+    }
+
+    @Override
+    public List<Tariff> findAllByAirlineId(Long airlineId) {
+        Connection connection = CONNECTION_POOL.getConnection();
+        List<Tariff> tariffs;
+        String selectByDepartureId =
+                "SELECT id, name, hand_luggage, register_luggage, place_choice, fast_track, " +
+                        "priority_boarding, service_class_id, base_price " +
+                        "FROM tariffs WHERE airline_id = ?";
+        try {
+            PreparedStatement preparedStatement =
+                    connection.prepareStatement(selectByDepartureId);
+            preparedStatement.setLong(1, airlineId);
+            preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.getResultSet();
+            tariffs = mapTariff(resultSet);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            CONNECTION_POOL.releaseConnection(connection);
+        }
+        return tariffs;
+    }
+
+    private List<Tariff> mapTariff(ResultSet resultSet) {
+        List<Tariff> tariffs = new ArrayList<>();
+        try {
+            while (resultSet.next()) {
+                Tariff tariff = new Tariff();
+                tariff.setId(resultSet.getLong(1));
+                tariff.setName(resultSet.getString(2));
+                tariff.setHandLuggage(resultSet.getInt(3));
+                tariff.setRegisterLuggage(resultSet.getInt(4));
+                tariff.setPlaceChoice(resultSet.getBoolean(5));
+                tariff.setFastTrack(resultSet.getBoolean(6));
+                tariff.setPriorityBoarding(resultSet.getBoolean(7));
+                tariff.setBasePrice(resultSet.getDouble(9));
+                Long serviceClassId = resultSet.getLong(8);
+                for(ServiceClass serviceClass : ServiceClass.values()) {
+                    if(serviceClass.getId().equals(serviceClassId)) {
+                        tariff.setServiceClass(serviceClass);
+                    }
+                }
+                tariffs.add(tariff);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return tariffs;
     }
 }

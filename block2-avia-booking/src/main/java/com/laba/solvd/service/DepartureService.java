@@ -4,4 +4,5 @@ import com.laba.solvd.domain.Airport;
 
 public interface DepartureService {
     void create(Long airportId);
+    Long getDepartureId(Long airportId);
 }

@@ -87,4 +87,17 @@ public class Flight {
     public void setPlaneType(PlaneType planeType) {
         this.planeType = planeType;
     }
+
+    @Override
+    public String toString() {
+        return "Flight{" +
+                "number='" + number + '\'' +
+                ", departureTime='" + departureTime + '\'' +
+                ", arrivalTime='" + arrivalTime + '\'' +
+                ", airline=" + airline +
+                ", departureAirport=" + departureAirport.toString() +
+                ", arrivalAirport=" + arrivalAirport.toString() +
+                ", planeType=" + planeType.toString() +
+                '}';
+    }
 }

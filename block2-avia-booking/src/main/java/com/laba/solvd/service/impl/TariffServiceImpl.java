@@ -9,6 +9,8 @@ import com.laba.solvd.service.TariffService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.List;
+
 public class TariffServiceImpl implements TariffService {
     private static final Logger LOGGER = LogManager.getLogger(TariffServiceImpl.class);
     private final TariffRepository tariffRepository;
@@ -28,5 +30,24 @@ public class TariffServiceImpl implements TariffService {
             LOGGER.info("You have to create airline first");
         }
         return tariff;
+    }
+
+    @Override
+    public Tariff findByName(String name, Long airlineId) {
+       for (Tariff tariff : findAllByAirlineId(airlineId)) {
+            if(tariff.getName().equals(name)) {
+                return tariff;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public List<Tariff> findAllByAirlineId(Long airlineId) {
+        List<Tariff> tariffs = tariffRepository.findAllByAirlineId(airlineId);
+        for (Tariff tariff : tariffs) {
+            tariff.setAirline(airlineService.findById(airlineId));
+        }
+        return tariffs;
     }
 }

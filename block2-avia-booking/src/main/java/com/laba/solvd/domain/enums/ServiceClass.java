@@ -1,22 +1,22 @@
 package com.laba.solvd.domain.enums;
 
 public enum ServiceClass {
-    BUSINESS(1, "business"),
-    ECONOMY(2, "economy");
+    BUSINESS(1L, "business"),
+    ECONOMY(2L, "economy");
 
-    private long id;
+    private Long id;
     private String name;
 
-    ServiceClass(long id, String name) {
+    ServiceClass(Long id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

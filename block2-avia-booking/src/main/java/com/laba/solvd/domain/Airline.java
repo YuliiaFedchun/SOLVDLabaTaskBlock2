@@ -59,4 +59,12 @@ public class Airline {
     public void setLuggageTariff(LuggageTariff luggageTariff) {
         this.luggageTariff = luggageTariff;
     }
+
+    @Override
+    public String toString() {
+        return "Airline{" +
+                "name='" + name + '\'' +
+                ", code='" + code + '\'' +
+                '}';
+    }
 }

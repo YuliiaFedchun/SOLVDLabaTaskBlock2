@@ -18,4 +18,9 @@ public class PlaneTypeServiceImpl implements PlaneTypeService {
         planeTypeRepository.create(planeType);
         return planeType;
     }
+
+    @Override
+    public PlaneType findByName(String name) {
+        return planeTypeRepository.findByName(name);
+    }
 }

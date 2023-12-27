@@ -25,4 +25,27 @@ public class DepartureRepositoryImpl implements DepartureRepository {
         }
 
     }
+
+    @Override
+    public Long getDepartureId(Long airportId) {
+        Connection connection = CONNECTION_POOL.getConnection();
+        Long departureId = null;
+        String selectById =
+                "SELECT id FROM departures WHERE airport_id = ?";
+        try {
+            PreparedStatement preparedStatement =
+                    connection.prepareStatement(selectById);
+            preparedStatement.setLong(1, airportId);
+            preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.getResultSet();
+            while (resultSet.next()) {
+                departureId = resultSet.getLong(1);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            CONNECTION_POOL.releaseConnection(connection);
+        }
+        return departureId;
+    }
 }

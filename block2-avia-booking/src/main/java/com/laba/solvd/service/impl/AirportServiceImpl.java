@@ -26,4 +26,14 @@ public class AirportServiceImpl implements AirportService {
         arrivalService.create(airport.getId());
         return airport;
     }
+
+    @Override
+    public Airport findById(Long airportId) {
+        return airportRepository.findById(airportId);
+    }
+
+    @Override
+    public Long findIdByName(String name) {
+        return airportRepository.findIdByName(name);
+    }
 }

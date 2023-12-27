@@ -28,6 +28,8 @@ public class Tariff {
         this.basePrice = basePrice;
     }
 
+    public Tariff() {}
+
     public long getId() {
         return id;
     }
@@ -106,5 +108,20 @@ public class Tariff {
 
     public void setBasePrice(double basePrice) {
         this.basePrice = basePrice;
+    }
+
+    @Override
+    public String toString() {
+        return "Tariff{" +
+                "name='" + name + '\'' +
+                ", handLuggage=" + handLuggage +
+                ", registerLuggage=" + registerLuggage +
+                ", placeChoice=" + placeChoice +
+                ", fastTrack=" + fastTrack +
+                ", priorityBoarding=" + priorityBoarding +
+                ", airline=" + airline.toString() +
+                ", serviceClass=" + serviceClass.getName() +
+                ", basePrice=" + basePrice +
+                '}';
     }
 }

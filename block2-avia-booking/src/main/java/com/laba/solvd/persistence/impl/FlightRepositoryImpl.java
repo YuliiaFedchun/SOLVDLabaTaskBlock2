@@ -6,6 +6,8 @@ import com.laba.solvd.persistence.ConnectionPool;
 import com.laba.solvd.persistence.repository.FlightRepository;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FlightRepositoryImpl implements FlightRepository {
     private static final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
@@ -51,7 +53,7 @@ public class FlightRepositoryImpl implements FlightRepository {
             preparedStatement.setLong(1, flightId);
             preparedStatement.executeQuery();
             ResultSet resultSet = preparedStatement.getResultSet();
-            flight = mapFlight(resultSet);
+            flight = mapFlight(resultSet).get(0);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
@@ -60,18 +62,42 @@ public class FlightRepositoryImpl implements FlightRepository {
         return flight;
     }
 
-    private Flight mapFlight(ResultSet resultSet) {
-        Flight flight = new Flight();
+    @Override
+    public List<Flight> findByDepartureId(Long departureId) {
+        Connection connection = CONNECTION_POOL.getConnection();
+        List<Flight> flights;
+        String selectByDepartureId =
+                "SELECT id, number, departure_time, arrival_time " +
+                        "FROM flights WHERE departure_id = ?";
+        try {
+            PreparedStatement preparedStatement =
+                    connection.prepareStatement(selectByDepartureId);
+            preparedStatement.setLong(1, departureId);
+            preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.getResultSet();
+            flights = mapFlight(resultSet);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            CONNECTION_POOL.releaseConnection(connection);
+        }
+        return flights;
+    }
+
+    private List<Flight> mapFlight(ResultSet resultSet) {
+        List<Flight> flights = new ArrayList<>();
         try {
             while (resultSet.next()) {
+                Flight flight = new Flight();
                 flight.setId(resultSet.getLong(1));
                 flight.setNumber(resultSet.getString(2));
                 flight.setDepartureTime(resultSet.getString(3));
                 flight.setArrivalTime(resultSet.getString(4));
+                flights.add(flight);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return flight;
+        return flights;
     }
 }

@@ -5,10 +5,10 @@ public enum AirportType {
     REGIONAL(2L, "regional"),
     HUB(3L, "hub");
 
-    private final long id;
+    private final Long id;
     private final String name;
 
-    AirportType(long id, String name) {
+    AirportType(Long id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -18,7 +18,7 @@ public enum AirportType {
         return name;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 

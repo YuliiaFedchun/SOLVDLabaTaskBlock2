@@ -15,6 +15,7 @@ public class Airport {
         this.country = country;
         this.typeName = typeName;
     }
+    public Airport(){}
 
     public long getId() {
         return id;
@@ -54,5 +55,14 @@ public class Airport {
 
     public void setTypeName(AirportType typeName) {
         this.typeName = typeName;
+    }
+
+    @Override
+    public String toString() {
+        return "Airport{" +
+                "name='" + name + '\'' +
+                ", city='" + city + '\'' +
+                ", country='" + country + '\'' +
+                '}';
     }
 }
