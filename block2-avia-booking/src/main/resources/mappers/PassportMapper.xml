@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.laba.solvd.persistence.repository.PassportRepository">
+    <insert id="create" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+        insert into passports (number) values (#{number})
+    </insert>
+    <select id="findById" resultMap="PassportResultMap">
+        select * from passports where id = #{passportId}
+    </select>
+    <delete id="deleteById">
+        delete from passports where id = #{passportId}
+    </delete>
+    <resultMap id="PassportResultMap" type="com.laba.solvd.domain.Passport" autoMapping="false">
+        <id column="id" property="id"/>
+        <result column="number" property="number"/>
+    </resultMap>
+</mapper>

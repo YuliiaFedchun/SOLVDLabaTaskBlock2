@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.laba.solvd.persistence.repository.AirportRepository">
+
+    <insert id="create" keyColumn="id" keyProperty="airport.id" useGeneratedKeys="true">
+        INSERT INTO airports (name, city, country, airport_type_id)
+        VALUES (#{airport.name}, #{airport.city}, #{airport.country}, #{airportTypeId})
+    </insert>
+    <sql id="airportSelect">
+        SELECT id, name, city, country
+        FROM airports
+    </sql>
+
+    <select id="findById" resultMap="AirportResultMap">
+        <include refid="airportSelect"/>
+        WHERE id=#{airportId}
+    </select>
+
+    <select id="findByName" resultMap="AirportResultMap">
+        <include refid="airportSelect"/>
+        WHERE name=#{name}
+    </select>
+
+    <select id="getAirportTypeId" resultType="Long">
+        SELECT airport_type_id FROM airports WHERE id = #{airportId}
+    </select>
+
+    <resultMap id="AirportResultMap" type="com.laba.solvd.domain.Airport" autoMapping="false">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="city" column="city"/>
+        <result property="country" column="country"/>
+    </resultMap>
+
+</mapper>

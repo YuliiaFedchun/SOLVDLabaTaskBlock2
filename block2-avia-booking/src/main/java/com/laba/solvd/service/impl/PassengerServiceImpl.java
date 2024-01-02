@@ -2,11 +2,11 @@ package com.laba.solvd.service.impl;
 
 import com.laba.solvd.domain.Passenger;
 import com.laba.solvd.domain.Passport;
+import com.laba.solvd.persistence.MybatisConfig;
 import com.laba.solvd.persistence.repository.PassengerRepository;
-import com.laba.solvd.persistence.impl.PassengerRepositoryImpl;
 import com.laba.solvd.service.PassengerService;
 import com.laba.solvd.service.PassportService;
-import com.laba.solvd.service.TicketService;
+import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
 
@@ -15,7 +15,9 @@ public class PassengerServiceImpl implements PassengerService {
     private final PassportService passportService;
 
     public PassengerServiceImpl() {
-        this.passengerRepository = new PassengerRepositoryImpl();
+        //this.passengerRepository = new PassengerRepositoryImpl();
+        SqlSession sqlSession = MybatisConfig.getSessionFactory().openSession(true);
+        this.passengerRepository = sqlSession.getMapper(PassengerRepository.class);
         this.passportService = new PassportServiceImpl();
     }
 
@@ -27,7 +29,7 @@ public class PassengerServiceImpl implements PassengerService {
             Passport passport = passportService.create(passenger.getPassport());
             passenger.setPassport(passport);
         }
-        passengerRepository.create(passenger);
+        passengerRepository.create(passenger, passenger.getPassport().getId());
         return passenger;
     }
 
@@ -44,9 +46,9 @@ public class PassengerServiceImpl implements PassengerService {
     public List<Passenger> findAll() {
         List<Passenger> passengers = passengerRepository.findAll();
         passengers.forEach(p -> {
-                    Passport passport = passportService.findById(passengerRepository.getPassportId(p.getId()));
-                    p.setPassport(passport);
-                });
+            Passport passport = passportService.findById(passengerRepository.getPassportId(p.getId()));
+            p.setPassport(passport);
+        });
         return passengers;
     }
 

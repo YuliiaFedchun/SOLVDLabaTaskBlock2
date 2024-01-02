@@ -10,6 +10,9 @@ public class LuggageTariff {
         this.registerLuggagePrice = registerLuggagePrice;
     }
 
+    public LuggageTariff() {
+    }
+
     public long getId() {
         return id;
     }

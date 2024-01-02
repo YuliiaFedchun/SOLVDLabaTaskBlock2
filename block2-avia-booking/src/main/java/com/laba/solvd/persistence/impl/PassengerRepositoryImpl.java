@@ -12,7 +12,7 @@ public class PassengerRepositoryImpl implements PassengerRepository {
     private static final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
 
     @Override
-    public void create(Passenger passenger) {
+    public void create(Passenger passenger, Long passportId) {
         Connection connection = CONNECTION_POOL.getConnection();
         String insertInto =
                 "Insert into passengers (first_name, last_name, age, phone_number, email, " +
@@ -25,7 +25,7 @@ public class PassengerRepositoryImpl implements PassengerRepository {
             preparedStatement.setInt(3, passenger.getAge());
             preparedStatement.setString(4, passenger.getPhoneNumber());
             preparedStatement.setString(5, passenger.getEmail());
-            preparedStatement.setLong(6, passenger.getPassport().getId());
+            preparedStatement.setLong(6, passportId);
             preparedStatement.executeUpdate();
             ResultSet resultSet = preparedStatement.getResultSet();
             while (resultSet.next()) {

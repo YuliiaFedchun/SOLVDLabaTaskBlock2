@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.laba.solvd.persistence.repository.TicketRepository">
+    <insert id="create" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO tickets (passenger_id, flight_id, add_hand_luggage,
+        add_register_luggage, tariff_id, price) VALUES (#{passengerId}, #{flightId},
+        #{ticket.addHandLuggage}, #{ticket.addRegisterLuggage}, #{tariffId}, #{ticket.price})
+    </insert>
+    <delete id="deleteByPassengerId">
+        DELETE FROM tickets WHERE passenger_id=#{passengerId}
+    </delete>
+
+</mapper>

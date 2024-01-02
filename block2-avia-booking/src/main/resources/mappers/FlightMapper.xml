@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.laba.solvd.persistence.repository.FlightRepository">
+    <insert id="create" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO flights (number, departure_time, arrival_time, airline_id,
+        departure_id, arrival_id, plane_type_id) VALUES (#{flight.number},
+        #{flight.departureTime}, #{flight.arrivalTime}, #{airlineId}, #{departureId},
+        #{arrivalId}, #{planeTypeId})
+    </insert>
+    <select id="findById" resultMap="FlightResultMap">
+        SELECT id, number, departure_time, arrival_time, airline_id FROM flights WHERE id=#{flightId}
+    </select>
+    <select id="findByDepartureId" resultMap="FlightResultMap">
+        SELECT id, number, departure_time, arrival_time, airline_id FROM flights WHERE departure_id=#{departureId}
+    </select>
+    <select id="getAirlineId" resultType="Long">
+        SELECT airline_id FROM flights WHERE id = #{id}
+    </select>
+    <select id="getDepartureId" resultType="Long">
+        SELECT departure_id FROM flights WHERE id = #{id}
+    </select>
+    <select id="getArrivalId" resultType="Long">
+        SELECT arrival_id FROM flights WHERE id = #{id}
+    </select>
+    <select id="getPlaneTypeId" resultType="Long">
+        SELECT plane_type_id FROM flights WHERE id = #{id}
+    </select>
+    <resultMap id="FlightResultMap" type="com.laba.solvd.domain.Flight" autoMapping="false">
+        <id column="id" property="id"/>
+        <result column="number" property="number"/>
+        <result column="departure_time" property="departureTime"/>
+        <result column="arrival_time" property="arrivalTime"/>
+        <association property="airline" javaType="com.laba.solvd.domain.Airline" column="airline_id" foreignColumn="id"
+                     resultMap="com.laba.solvd.persistence.repository.AirlineRepository.AirlineResultMap"/>
+    </resultMap>
+</mapper>

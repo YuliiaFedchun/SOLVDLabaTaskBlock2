@@ -1,11 +1,12 @@
 package com.laba.solvd.service.impl;
 
-import com.laba.solvd.domain.Airline;
 import com.laba.solvd.domain.Tariff;
-import com.laba.solvd.persistence.impl.TariffRepositoryImpl;
+import com.laba.solvd.domain.enums.ServiceClass;
+import com.laba.solvd.persistence.MybatisConfig;
 import com.laba.solvd.persistence.repository.TariffRepository;
 import com.laba.solvd.service.AirlineService;
 import com.laba.solvd.service.TariffService;
+import org.apache.ibatis.session.SqlSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -17,15 +18,17 @@ public class TariffServiceImpl implements TariffService {
     private final AirlineService airlineService;
 
     public TariffServiceImpl() {
-        this.tariffRepository = new TariffRepositoryImpl();
+        //this.tariffRepository = new TariffRepositoryImpl();
+        SqlSession sqlSession = MybatisConfig.getSessionFactory().openSession(true);
+        this.tariffRepository = sqlSession.getMapper(TariffRepository.class);
         this.airlineService = new AirlineServiceImpl();
     }
 
     @Override
-    public Tariff create(Tariff tariff, Long airlineId) {
+    public Tariff create(Tariff tariff, Long airlineId, Long serviceClassId) {
         tariff.setId(0);
         if (airlineService.findById(airlineId) != null) {
-            tariffRepository.create(tariff, airlineId);
+            tariffRepository.create(tariff, airlineId, serviceClassId);
         } else {
             LOGGER.info("You have to create airline first");
         }
@@ -34,8 +37,8 @@ public class TariffServiceImpl implements TariffService {
 
     @Override
     public Tariff findByName(String name, Long airlineId) {
-       for (Tariff tariff : findAllByAirlineId(airlineId)) {
-            if(tariff.getName().equals(name)) {
+        for (Tariff tariff : findAllByAirlineId(airlineId)) {
+            if (tariff.getName().equals(name)) {
                 return tariff;
             }
         }
@@ -47,7 +50,19 @@ public class TariffServiceImpl implements TariffService {
         List<Tariff> tariffs = tariffRepository.findAllByAirlineId(airlineId);
         for (Tariff tariff : tariffs) {
             tariff.setAirline(airlineService.findById(airlineId));
+            Long serviceClassId = tariffRepository.getServiceClassId(tariff.getId());
+            for (ServiceClass serviceClass : ServiceClass.values()) {
+                if (serviceClass.getId().equals(serviceClassId)) {
+                    tariff.setServiceClass(serviceClass);
+                }
+            }
         }
         return tariffs;
     }
+
+    @Override
+    public Long getServiceClassId(Long tariffId) {
+        return tariffRepository.getServiceClassId(tariffId);
+    }
+
 }

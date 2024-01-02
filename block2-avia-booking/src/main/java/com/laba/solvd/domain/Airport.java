@@ -15,7 +15,9 @@ public class Airport {
         this.country = country;
         this.typeName = typeName;
     }
-    public Airport(){}
+
+    public Airport() {
+    }
 
     public long getId() {
         return id;
@@ -63,6 +65,7 @@ public class Airport {
                 "name='" + name + '\'' +
                 ", city='" + city + '\'' +
                 ", country='" + country + '\'' +
+                ", typeName='" + typeName.getName() + '\'' +
                 '}';
     }
 }

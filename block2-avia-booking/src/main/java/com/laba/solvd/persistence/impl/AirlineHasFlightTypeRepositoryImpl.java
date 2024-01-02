@@ -3,7 +3,9 @@ package com.laba.solvd.persistence.impl;
 import com.laba.solvd.persistence.ConnectionPool;
 import com.laba.solvd.persistence.repository.AirlineHasFlightTypeRepository;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 public class AirlineHasFlightTypeRepositoryImpl implements AirlineHasFlightTypeRepository {
     private static final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();

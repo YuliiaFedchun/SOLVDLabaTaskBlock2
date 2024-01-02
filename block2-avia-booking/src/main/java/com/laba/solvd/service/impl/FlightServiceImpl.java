@@ -1,13 +1,14 @@
 package com.laba.solvd.service.impl;
 
-import com.laba.solvd.Main;
-import com.laba.solvd.domain.Airline;
-import com.laba.solvd.domain.Airport;
 import com.laba.solvd.domain.Flight;
 import com.laba.solvd.domain.PlaneType;
-import com.laba.solvd.persistence.impl.FlightRepositoryImpl;
+import com.laba.solvd.persistence.MybatisConfig;
 import com.laba.solvd.persistence.repository.FlightRepository;
-import com.laba.solvd.service.*;
+import com.laba.solvd.service.AirlineService;
+import com.laba.solvd.service.AirportService;
+import com.laba.solvd.service.FlightService;
+import com.laba.solvd.service.PlaneTypeService;
+import org.apache.ibatis.session.SqlSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -21,7 +22,9 @@ public class FlightServiceImpl implements FlightService {
     private final AirportService airportService;
 
     public FlightServiceImpl() {
-        this.flightRepository = new FlightRepositoryImpl();
+        //this.flightRepository = new FlightRepositoryImpl();
+        SqlSession sqlSession = MybatisConfig.getSessionFactory().openSession(true);
+        this.flightRepository = sqlSession.getMapper(FlightRepository.class);
         this.airlineService = new AirlineServiceImpl();
         this.planeTypeService = new PlaneTypeServiceImpl();
         this.airportService = new AirportServiceImpl();
@@ -31,9 +34,9 @@ public class FlightServiceImpl implements FlightService {
     public Flight create(Flight flight, Long airlineId, Long departureId, Long arrivalId) {
         flight.setId(0);
         if (airlineService.findById(airlineId) != null) {
-            if(airportService.findById(departureId) != null &&
+            if (airportService.findById(departureId) != null &&
                     airportService.findById(arrivalId) != null) {
-                flightRepository.create(flight);
+
                 flight.setAirline(airlineService.findById(airlineId));
                 flight.setDepartureAirport(airportService.findById(departureId));
                 flight.setArrivalAirport(airportService.findById(arrivalId));
@@ -54,12 +57,19 @@ public class FlightServiceImpl implements FlightService {
             }
             flight.setPlaneType(planeType);
         }
+        flightRepository.create(flight, airlineId, departureId, arrivalId,
+                flight.getPlaneType().getId());
         return flight;
     }
 
     @Override
     public Flight findById(Long flightId) {
-        return flightRepository.findById(flightId);
+        Flight flight = flightRepository.findById(flightId);
+        flight.setAirline(airlineService.findById(flightRepository.getAirlineId(flightId)));
+        flight.setDepartureAirport(airportService.findById(flightRepository.getDepartureId(flightId)));
+        flight.setArrivalAirport(airportService.findById(flightRepository.getArrivalId(flightId)));
+        flight.setPlaneType(planeTypeService.findById(flightRepository.getPlaneTypeId(flightId)));
+        return flight;
     }
 
     @Override
@@ -69,7 +79,7 @@ public class FlightServiceImpl implements FlightService {
 
     @Override
     public List<Flight> findByDepartureAirportName(String departureAirportName) {
-        Long departureAirportId = airportService.findIdByName(departureAirportName);
+        Long departureAirportId = airportService.findByName(departureAirportName).getId();
         return findByDepartureAirportId(departureAirportId);
     }
 }

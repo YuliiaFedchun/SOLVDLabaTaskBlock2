@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.laba.solvd.persistence.repository.TariffRepository">
+    <insert id="create" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO tariffs (name, hand_luggage, register_luggage, place_choice, fast_track,
+        priority_boarding, airline_id, service_class_id, base_price)
+        "VALUES (#{tariff.name}, #{tariff.handLuggage}, #{tariff.registerLuggage},
+        #{tariff.placeChoice}, #{tariff.fastTrack}, #{tariff.priorityBoarding}, #{airlineId},
+        #{serviceClassId}, #{tariff.basePrice})
+    </insert>
+    <select id="findAllByAirlineId" resultMap="TariffResultMap">
+        SELECT id, name, hand_luggage, register_luggage, place_choice, fast_track,
+        priority_boarding, airline_id, base_price
+        FROM tariffs WHERE airline_id = #{airlineId}
+    </select>
+    <select id="getServiceClassId" resultType="Long">
+        SELECT service_class_id from tariffs WHERE id = #{tariffId}
+    </select>
+    <resultMap id="TariffResultMap" type="com.laba.solvd.domain.Tariff" autoMapping="false">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="hand_luggage" property="handLuggage"/>
+        <result column="register_luggage" property="registerLuggage"/>
+        <result column="place_choice" property="placeChoice"/>
+        <result column="fast_track" property="fastTrack"/>
+        <result column="priority_boarding" property="priorityBoarding"/>
+        <result column="base_price" property="basePrice"/>
+        <association property="airline"
+                     resultMap="com.laba.solvd.persistence.repository.AirlineRepository.AirlineResultMap"/>
+    </resultMap>
+</mapper>

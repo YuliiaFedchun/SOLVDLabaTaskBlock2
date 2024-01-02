@@ -1,7 +1,7 @@
 package com.laba.solvd.persistence.impl;
 
-import com.laba.solvd.persistence.repository.ArrivalRepository;
 import com.laba.solvd.persistence.ConnectionPool;
+import com.laba.solvd.persistence.repository.ArrivalRepository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

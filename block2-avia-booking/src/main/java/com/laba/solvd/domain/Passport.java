@@ -13,8 +13,6 @@ public class Passport {
     public Passport() {
     }
 
-    ;
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

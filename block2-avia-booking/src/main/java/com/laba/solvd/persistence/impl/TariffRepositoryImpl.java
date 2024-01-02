@@ -1,8 +1,6 @@
 package com.laba.solvd.persistence.impl;
 
-import com.laba.solvd.domain.Flight;
 import com.laba.solvd.domain.Tariff;
-import com.laba.solvd.domain.enums.ServiceClass;
 import com.laba.solvd.persistence.ConnectionPool;
 import com.laba.solvd.persistence.repository.TariffRepository;
 
@@ -14,7 +12,7 @@ public class TariffRepositoryImpl implements TariffRepository {
     private static final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
 
     @Override
-    public void create(Tariff tariff, Long airlineId) {
+    public void create(Tariff tariff, Long airlineId, Long serviceClassId) {
         Connection connection = CONNECTION_POOL.getConnection();
         String insertInto =
                 "INSERT INTO tariffs (name, hand_luggage, register_luggage, place_choice, fast_track, " +
@@ -30,7 +28,7 @@ public class TariffRepositoryImpl implements TariffRepository {
             preparedStatement.setBoolean(5, tariff.hasFastTrack());
             preparedStatement.setBoolean(6, tariff.hasPriorityBoarding());
             preparedStatement.setLong(7, airlineId);
-            preparedStatement.setLong(8, tariff.getServiceClass().getId());
+            preparedStatement.setLong(8, serviceClassId);
             preparedStatement.setDouble(9, tariff.getBasePrice());
             preparedStatement.executeUpdate();
             ResultSet resultSet = preparedStatement.getResultSet();
@@ -48,13 +46,12 @@ public class TariffRepositoryImpl implements TariffRepository {
     public List<Tariff> findAllByAirlineId(Long airlineId) {
         Connection connection = CONNECTION_POOL.getConnection();
         List<Tariff> tariffs;
-        String selectByDepartureId =
+        String selectByAirlineId =
                 "SELECT id, name, hand_luggage, register_luggage, place_choice, fast_track, " +
-                        "priority_boarding, service_class_id, base_price " +
-                        "FROM tariffs WHERE airline_id = ?";
+                        "priority_boarding, base_price FROM tariffs WHERE airline_id = ?";
         try {
             PreparedStatement preparedStatement =
-                    connection.prepareStatement(selectByDepartureId);
+                    connection.prepareStatement(selectByAirlineId);
             preparedStatement.setLong(1, airlineId);
             preparedStatement.executeQuery();
             ResultSet resultSet = preparedStatement.getResultSet();
@@ -66,6 +63,30 @@ public class TariffRepositoryImpl implements TariffRepository {
         }
         return tariffs;
     }
+
+    @Override
+    public Long getServiceClassId(Long tariffId) {
+        Connection connection = CONNECTION_POOL.getConnection();
+        Long serviceClassId = null;
+        String selectById =
+                "SELECT service_class_id FROM tariffs WHERE id = ?";
+        try {
+            PreparedStatement preparedStatement =
+                    connection.prepareStatement(selectById);
+            preparedStatement.setLong(1, tariffId);
+            preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.getResultSet();
+            while (resultSet.next()) {
+                serviceClassId = resultSet.getLong(1);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            CONNECTION_POOL.releaseConnection(connection);
+        }
+        return serviceClassId;
+    }
+
 
     private List<Tariff> mapTariff(ResultSet resultSet) {
         List<Tariff> tariffs = new ArrayList<>();
@@ -79,13 +100,7 @@ public class TariffRepositoryImpl implements TariffRepository {
                 tariff.setPlaceChoice(resultSet.getBoolean(5));
                 tariff.setFastTrack(resultSet.getBoolean(6));
                 tariff.setPriorityBoarding(resultSet.getBoolean(7));
-                tariff.setBasePrice(resultSet.getDouble(9));
-                Long serviceClassId = resultSet.getLong(8);
-                for(ServiceClass serviceClass : ServiceClass.values()) {
-                    if(serviceClass.getId().equals(serviceClassId)) {
-                        tariff.setServiceClass(serviceClass);
-                    }
-                }
+                tariff.setBasePrice(resultSet.getDouble(8));
                 tariffs.add(tariff);
             }
         } catch (SQLException e) {
@@ -93,4 +108,5 @@ public class TariffRepositoryImpl implements TariffRepository {
         }
         return tariffs;
     }
+
 }

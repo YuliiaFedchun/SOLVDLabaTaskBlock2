@@ -15,8 +15,7 @@ public class Tariff {
     private double basePrice;
 
     public Tariff(String name, int handLuggage, int registerLuggage, boolean placeChoice,
-                  boolean fastTrack, boolean priorityBoarding, Airline airline,
-                  ServiceClass serviceClass, double basePrice) {
+                  boolean fastTrack, boolean priorityBoarding, Airline airline, double basePrice) {
         this.name = name;
         this.handLuggage = handLuggage;
         this.registerLuggage = registerLuggage;
@@ -24,11 +23,11 @@ public class Tariff {
         this.fastTrack = fastTrack;
         this.priorityBoarding = priorityBoarding;
         this.airline = airline;
-        this.serviceClass = serviceClass;
         this.basePrice = basePrice;
     }
 
-    public Tariff() {}
+    public Tariff() {
+    }
 
     public long getId() {
         return id;

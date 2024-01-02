@@ -10,7 +10,7 @@ public class TicketRepositoryImpl implements TicketRepository {
     private static final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
 
     @Override
-    public void create(Ticket ticket) {
+    public void create(Ticket ticket, Long passengerId, Long flightId, Long tariffId) {
         Connection connection = CONNECTION_POOL.getConnection();
         String insertInto =
                 "Insert into tickets (passenger_id, flight_id, add_hand_luggage, " +
@@ -18,11 +18,11 @@ public class TicketRepositoryImpl implements TicketRepository {
         try {
             PreparedStatement preparedStatement =
                     connection.prepareStatement(insertInto, Statement.RETURN_GENERATED_KEYS);
-            preparedStatement.setLong(1, ticket.getPassenger().getId());
-            preparedStatement.setLong(2, ticket.getFlight().getId());
+            preparedStatement.setLong(1, passengerId);
+            preparedStatement.setLong(2, flightId);
             preparedStatement.setInt(3, ticket.getAddHandLuggage());
             preparedStatement.setInt(4, ticket.getAddRegisterLuggage());
-            preparedStatement.setLong(5, ticket.getTariff().getId());
+            preparedStatement.setLong(5, tariffId);
             preparedStatement.setDouble(6, ticket.getPrice());
             preparedStatement.executeUpdate();
 

@@ -6,6 +6,9 @@ public interface AirportService {
     Airport create(Airport airport);
 
     Airport findById(Long airportId);
-    Long findIdByName(String name);
+
+    Airport findByName(String name);
+
+    Long getAirportTypeId(Long airportId);
 
 }

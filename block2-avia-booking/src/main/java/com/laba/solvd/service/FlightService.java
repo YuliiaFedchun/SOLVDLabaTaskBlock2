@@ -10,5 +10,6 @@ public interface FlightService {
     Flight findById(Long flightId);
 
     List<Flight> findByDepartureAirportId(Long departureAirportId);
+
     List<Flight> findByDepartureAirportName(String departureAirportName);
 }

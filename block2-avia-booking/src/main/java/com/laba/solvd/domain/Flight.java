@@ -94,10 +94,7 @@ public class Flight {
                 "number='" + number + '\'' +
                 ", departureTime='" + departureTime + '\'' +
                 ", arrivalTime='" + arrivalTime + '\'' +
-                ", airline=" + airline +
-                ", departureAirport=" + departureAirport.toString() +
-                ", arrivalAirport=" + arrivalAirport.toString() +
-                ", planeType=" + planeType.toString() +
+                ", airline=" + airline.toString() +
                 '}';
     }
 }

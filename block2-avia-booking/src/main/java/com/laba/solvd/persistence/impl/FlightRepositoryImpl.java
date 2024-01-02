@@ -1,7 +1,6 @@
 package com.laba.solvd.persistence.impl;
 
 import com.laba.solvd.domain.Flight;
-import com.laba.solvd.domain.Passenger;
 import com.laba.solvd.persistence.ConnectionPool;
 import com.laba.solvd.persistence.repository.FlightRepository;
 
@@ -13,7 +12,8 @@ public class FlightRepositoryImpl implements FlightRepository {
     private static final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
 
     @Override
-    public void create(Flight flight) {
+    public void create(Flight flight, Long airlineId, Long departureId, Long arrivalId,
+                       Long planeTypeId) {
         Connection connection = CONNECTION_POOL.getConnection();
         String insertInto =
                 "INSERT INTO flights (number, departure_time, arrival_time, airline_id, " +
@@ -24,10 +24,10 @@ public class FlightRepositoryImpl implements FlightRepository {
             preparedStatement.setString(1, flight.getNumber());
             preparedStatement.setString(2, flight.getDepartureTime());
             preparedStatement.setString(3, flight.getArrivalTime());
-            preparedStatement.setLong(4, flight.getAirline().getId());
-            preparedStatement.setLong(5, flight.getDepartureAirport().getId());
-            preparedStatement.setLong(6, flight.getArrivalAirport().getId());
-            preparedStatement.setLong(7, flight.getPlaneType().getId());
+            preparedStatement.setLong(4, airlineId);
+            preparedStatement.setLong(5, departureId);
+            preparedStatement.setLong(6, arrivalId);
+            preparedStatement.setLong(7, planeTypeId);
             preparedStatement.executeUpdate();
             ResultSet resultSet = preparedStatement.getResultSet();
             while (resultSet.next()) {
@@ -82,6 +82,98 @@ public class FlightRepositoryImpl implements FlightRepository {
             CONNECTION_POOL.releaseConnection(connection);
         }
         return flights;
+    }
+
+    @Override
+    public Long getAirlineId(Long flightId) {
+        Connection connection = CONNECTION_POOL.getConnection();
+        Long airlineId = null;
+        String selectById =
+                "SELECT airline_id FROM flights WHERE id = ?";
+        try {
+            PreparedStatement preparedStatement =
+                    connection.prepareStatement(selectById);
+            preparedStatement.setLong(1, flightId);
+            preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.getResultSet();
+            while (resultSet.next()) {
+                airlineId = resultSet.getLong(1);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            CONNECTION_POOL.releaseConnection(connection);
+        }
+        return airlineId;
+    }
+
+    @Override
+    public Long getDepartureId(Long flightId) {
+        Connection connection = CONNECTION_POOL.getConnection();
+        Long departureId = null;
+        String selectById =
+                "SELECT departure_id FROM flights WHERE id = ?";
+        try {
+            PreparedStatement preparedStatement =
+                    connection.prepareStatement(selectById);
+            preparedStatement.setLong(1, flightId);
+            preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.getResultSet();
+            while (resultSet.next()) {
+                departureId = resultSet.getLong(1);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            CONNECTION_POOL.releaseConnection(connection);
+        }
+        return departureId;
+    }
+
+    @Override
+    public Long getArrivalId(Long flightId) {
+        Connection connection = CONNECTION_POOL.getConnection();
+        Long arrivalId = null;
+        String selectById =
+                "SELECT arrival_id FROM flights WHERE id = ?";
+        try {
+            PreparedStatement preparedStatement =
+                    connection.prepareStatement(selectById);
+            preparedStatement.setLong(1, flightId);
+            preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.getResultSet();
+            while (resultSet.next()) {
+                arrivalId = resultSet.getLong(1);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            CONNECTION_POOL.releaseConnection(connection);
+        }
+        return arrivalId;
+    }
+
+    @Override
+    public Long getPlaneTypeId(Long flightId) {
+        Connection connection = CONNECTION_POOL.getConnection();
+        Long PlaneTypeId = null;
+        String selectById =
+                "SELECT plane_type_id FROM flights WHERE id = ?";
+        try {
+            PreparedStatement preparedStatement =
+                    connection.prepareStatement(selectById);
+            preparedStatement.setLong(1, flightId);
+            preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.getResultSet();
+            while (resultSet.next()) {
+                PlaneTypeId = resultSet.getLong(1);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            CONNECTION_POOL.releaseConnection(connection);
+        }
+        return PlaneTypeId;
     }
 
     private List<Flight> mapFlight(ResultSet resultSet) {

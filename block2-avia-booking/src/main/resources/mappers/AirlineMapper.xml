@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.laba.solvd.persistence.repository.AirlineRepository">
+    <insert id="create" keyColumn="id" keyProperty="airline.id" useGeneratedKeys="true">
+        INSERT INTO airlines (name, code, luggage_tariff_id)
+        VALUES (#{airline.name}, #{airline.code}, #{luggageTariffId})
+    </insert>
+    <select id="findById">
+        SELECT * FROM airlines WHERE id = #{airlineId}
+    </select>
+    <resultMap id="AirlineResultMap" type="com.laba.solvd.domain.Airline" autoMapping="false">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="code" property="code"/>
+        <association property="luggageTariff"
+                     resultMap="com.laba.solvd.persistence.repository.LuggageTariffRepository.LuggageTariffMap"/>
+
+    </resultMap>
+</mapper>

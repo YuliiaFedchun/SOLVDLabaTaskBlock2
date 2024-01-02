@@ -3,7 +3,9 @@ package com.laba.solvd.persistence.impl;
 import com.laba.solvd.persistence.ConnectionPool;
 import com.laba.solvd.persistence.repository.DepartureRepository;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 public class DepartureRepositoryImpl implements DepartureRepository {
     private static final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
@@ -26,7 +28,7 @@ public class DepartureRepositoryImpl implements DepartureRepository {
 
     }
 
-    @Override
+    /*@Override
     public Long getDepartureId(Long airportId) {
         Connection connection = CONNECTION_POOL.getConnection();
         Long departureId = null;
@@ -47,5 +49,5 @@ public class DepartureRepositoryImpl implements DepartureRepository {
             CONNECTION_POOL.releaseConnection(connection);
         }
         return departureId;
-    }
+    }*/
 }

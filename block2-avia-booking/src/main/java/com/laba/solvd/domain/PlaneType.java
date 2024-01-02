@@ -9,7 +9,9 @@ public class PlaneType {
         this.name = name;
         this.seatsNumber = seatsNumber;
     }
-    public PlaneType(){}
+
+    public PlaneType() {
+    }
 
     public long getId() {
         return id;

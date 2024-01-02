@@ -1,6 +1,5 @@
 package com.laba.solvd.persistence.impl;
 
-import com.laba.solvd.domain.Passenger;
 import com.laba.solvd.domain.Passport;
 import com.laba.solvd.persistence.ConnectionPool;
 import com.laba.solvd.persistence.repository.PassportRepository;

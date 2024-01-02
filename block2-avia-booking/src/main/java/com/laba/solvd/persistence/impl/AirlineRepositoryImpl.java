@@ -1,9 +1,8 @@
 package com.laba.solvd.persistence.impl;
 
 import com.laba.solvd.domain.Airline;
-import com.laba.solvd.domain.Passenger;
-import com.laba.solvd.persistence.repository.AirlineRepository;
 import com.laba.solvd.persistence.ConnectionPool;
+import com.laba.solvd.persistence.repository.AirlineRepository;
 
 import java.sql.*;
 
@@ -11,7 +10,7 @@ public class AirlineRepositoryImpl implements AirlineRepository {
     private static final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
 
     @Override
-    public void create(Airline airline) {
+    public void create(Airline airline, Long luggageTariffId) {
         Connection connection = CONNECTION_POOL.getConnection();
         String insertInto =
                 "INSERT INTO airlines (name, code, luggage_tariff_id) VALUES (?,?,?)";
@@ -20,7 +19,7 @@ public class AirlineRepositoryImpl implements AirlineRepository {
                     connection.prepareStatement(insertInto, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, airline.getName());
             preparedStatement.setString(2, airline.getCode());
-            preparedStatement.setLong(3, airline.getLuggageTariff().getId());
+            preparedStatement.setLong(3, luggageTariffId);
             preparedStatement.executeUpdate();
             ResultSet resultSet = preparedStatement.getResultSet();
             while (resultSet.next()) {
