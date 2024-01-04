@@ -65,6 +65,8 @@ public class Airline {
         return "Airline{" +
                 "name='" + name + '\'' +
                 ", code='" + code + '\'' +
+                ", flightTypes='" + flightTypes.toString() + '\'' +
+                ", luggageTariff='" + luggageTariff.toString() + '\'' +
                 '}';
     }
 }

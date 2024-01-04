@@ -1,0 +1,22 @@
+<flight xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="flight.xsd">
+
+    <number>0035</number>
+    <departureTime>2023-12-19 12:35:00</departureTime>
+    <arrivalTime>2023-12-19 13:50:00</arrivalTime>
+
+    <airline name="KLM Royal Dutch Airlines" code="KLM">
+        <flightTypes>
+            <flightType typeName="regular"/>
+            <flightType typeName="charter"/>
+        </flightTypes>
+        <luggageTariff handLuggagePrice="15.0" registerLuggagePrice="25.0"/>
+    </airline>
+
+    <departureAirport name="Charles de Gaulle" city="Paris" country="France" typeName="international"/>
+
+    <arrivalAirport name="Heathrow" city="London" country="Great Britain" typeName="international"/>
+
+    <planeType name="Boeing-737" seatsNumber="350"/>
+
+</flight>

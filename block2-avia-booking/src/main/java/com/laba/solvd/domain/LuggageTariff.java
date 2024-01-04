@@ -36,4 +36,12 @@ public class LuggageTariff {
     public void setRegisterLuggagePrice(double registerLuggagePrice) {
         this.registerLuggagePrice = registerLuggagePrice;
     }
+
+    @Override
+    public String toString() {
+        return "LuggageTariff{" +
+                "handLuggagePrice=" + handLuggagePrice +
+                ", registerLuggagePrice=" + registerLuggagePrice +
+                '}';
+    }
 }

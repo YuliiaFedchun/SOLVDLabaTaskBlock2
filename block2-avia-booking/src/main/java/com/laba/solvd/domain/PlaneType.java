@@ -41,6 +41,7 @@ public class PlaneType {
     public String toString() {
         return "PlaneType{" +
                 "name='" + name + '\'' +
+                "seatsNumber='" + seatsNumber + '\'' +
                 '}';
     }
 }
