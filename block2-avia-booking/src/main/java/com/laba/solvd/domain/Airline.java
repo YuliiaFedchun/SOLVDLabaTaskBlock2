@@ -1,13 +1,26 @@
 package com.laba.solvd.domain;
 
 import com.laba.solvd.domain.enums.FlightType;
+import com.laba.solvd.xml.adapters.FlightTypeAdapter;
+import com.laba.solvd.xml.adapters.FlightTypesAdapter;
+import jakarta.xml.bind.annotation.*;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import java.util.List;
 
+
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Airline {
+    @XmlTransient
     private long id;
+    @XmlAttribute(name = "name")
     private String name;
+    @XmlAttribute(name = "code")
     private String code;
+
+    @XmlElementWrapper(name = "flightTypes")
+    @XmlElement(name = "flightType")
+    @XmlJavaTypeAdapter(FlightTypeAdapter.class)
     private List<FlightType> flightTypes;
     private LuggageTariff luggageTariff;
 

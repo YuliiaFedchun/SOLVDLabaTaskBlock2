@@ -1,8 +1,18 @@
 package com.laba.solvd.domain;
 
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlTransient;
+
+@XmlAccessorType(XmlAccessType.FIELD)
 public class PlaneType {
+    @XmlTransient
     private long id;
+    @XmlAttribute(name = "name")
     private String name;
+
+    @XmlAttribute(name = "seatsNumber")
     private int seatsNumber;
 
     public PlaneType(String name, int seatsNumber) {

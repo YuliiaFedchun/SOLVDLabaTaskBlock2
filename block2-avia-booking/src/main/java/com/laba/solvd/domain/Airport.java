@@ -1,12 +1,25 @@
 package com.laba.solvd.domain;
 
 import com.laba.solvd.domain.enums.AirportType;
+import com.laba.solvd.xml.adapters.AirportTypeAdapter;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlTransient;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Airport {
+    @XmlTransient
     private long id;
+    @XmlAttribute(name = "name")
     private String name;
+    @XmlAttribute(name = "city")
     private String city;
+    @XmlAttribute(name = "country")
     private String country;
+    @XmlJavaTypeAdapter(AirportTypeAdapter.class)
+    @XmlAttribute(name = "typeName")
     private AirportType typeName;
 
     public Airport(String name, String city, String country, AirportType typeName) {

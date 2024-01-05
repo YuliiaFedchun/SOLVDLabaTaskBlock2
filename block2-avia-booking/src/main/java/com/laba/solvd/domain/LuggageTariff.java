@@ -1,8 +1,17 @@
 package com.laba.solvd.domain;
 
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlTransient;
+
+@XmlAccessorType(XmlAccessType.FIELD)
 public class LuggageTariff {
+    @XmlTransient
     private long id;
+    @XmlAttribute(name = "handLuggagePrice")
     private double handLuggagePrice;
+    @XmlAttribute(name = "registerLuggagePrice")
     private double registerLuggagePrice;
 
     public LuggageTariff(double handLuggagePrice, double registerLuggagePrice) {

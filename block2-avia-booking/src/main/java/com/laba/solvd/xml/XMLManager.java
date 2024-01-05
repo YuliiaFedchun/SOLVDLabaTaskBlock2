@@ -8,6 +8,9 @@ import com.laba.solvd.xml.handlers.AirlineHandler;
 import com.laba.solvd.xml.handlers.AirportHandler;
 import com.laba.solvd.xml.handlers.FlightHandler;
 import com.laba.solvd.xml.handlers.PlaneTypeHandler;
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Unmarshaller;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.xml.sax.SAXException;
@@ -26,7 +29,8 @@ public class XMLManager  {
 
         File file = new File(fileName);
 
-        SAXParserFactory factory = SAXParserFactory.newInstance();
+        //SAX
+       /* SAXParserFactory factory = SAXParserFactory.newInstance();
         SAXParser parser = factory.newSAXParser();
 
         AirlineHandler airlineHandler = new AirlineHandler();
@@ -53,7 +57,21 @@ public class XMLManager  {
         flight.setDepartureAirport(departureAirport);
         flight.setArrivalAirport(arrivalAirport);
         flight.setPlaneType(planeType);
-        LOGGER.info(flight.toString());
+        LOGGER.info(flight.toString());*/
+
+        //JAXB
+        try {
+            JAXBContext context = JAXBContext.newInstance(Flight.class);
+            Unmarshaller unmarshaller = context.createUnmarshaller();
+            Flight flight1 = (Flight) unmarshaller.unmarshal(file);
+            LOGGER.info(flight1.toString());
+            LOGGER.info("Departure airport: " + flight1.getDepartureAirport().toString());
+            LOGGER.info("Arrival airport: " + flight1.getArrivalAirport().toString());
+            LOGGER.info(flight1.getPlaneType().toString());
+        } catch (JAXBException e) {
+            throw new RuntimeException(e);
+        }
+
 
     }
 }
