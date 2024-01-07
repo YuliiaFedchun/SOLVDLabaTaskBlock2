@@ -1,7 +1,7 @@
 package com.laba.solvd.domain;
 
 import com.laba.solvd.domain.enums.AirportType;
-import com.laba.solvd.xml.adapters.AirportTypeAdapter;
+import com.laba.solvd.xml.jaxb.adapters.AirportTypeAdapter;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAttribute;

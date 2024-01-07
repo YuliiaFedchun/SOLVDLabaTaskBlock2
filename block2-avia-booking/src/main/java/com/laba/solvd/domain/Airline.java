@@ -1,8 +1,7 @@
 package com.laba.solvd.domain;
 
 import com.laba.solvd.domain.enums.FlightType;
-import com.laba.solvd.xml.adapters.FlightTypeAdapter;
-import com.laba.solvd.xml.adapters.FlightTypesAdapter;
+import com.laba.solvd.xml.jaxb.adapters.FlightTypeAdapter;
 import jakarta.xml.bind.annotation.*;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 

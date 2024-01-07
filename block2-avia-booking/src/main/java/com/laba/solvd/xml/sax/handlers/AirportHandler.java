@@ -1,4 +1,4 @@
-package com.laba.solvd.xml.handlers;
+package com.laba.solvd.xml.sax.handlers;
 
 import com.laba.solvd.domain.Airport;
 import com.laba.solvd.domain.enums.AirportType;

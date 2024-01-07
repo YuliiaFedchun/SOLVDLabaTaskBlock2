@@ -1,4 +1,4 @@
-package com.laba.solvd.xml.adapters;
+package com.laba.solvd.xml.jaxb.adapters;
 
 import com.laba.solvd.domain.enums.FlightType;
 import jakarta.xml.bind.annotation.adapters.XmlAdapter;

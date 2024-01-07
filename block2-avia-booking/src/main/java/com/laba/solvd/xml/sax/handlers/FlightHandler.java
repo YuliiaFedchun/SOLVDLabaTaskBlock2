@@ -1,4 +1,4 @@
-package com.laba.solvd.xml.handlers;
+package com.laba.solvd.xml.sax.handlers;
 
 import com.laba.solvd.domain.Flight;
 import org.xml.sax.Attributes;

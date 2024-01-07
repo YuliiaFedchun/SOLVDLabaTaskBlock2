@@ -1,4 +1,4 @@
-package com.laba.solvd.xml.handlers;
+package com.laba.solvd.xml.sax.handlers;
 
 import com.laba.solvd.domain.Airline;
 import com.laba.solvd.domain.LuggageTariff;

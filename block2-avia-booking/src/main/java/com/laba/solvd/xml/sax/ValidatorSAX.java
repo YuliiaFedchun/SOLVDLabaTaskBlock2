@@ -1,4 +1,4 @@
-package com.laba.solvd.xml;
+package com.laba.solvd.xml.sax;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
