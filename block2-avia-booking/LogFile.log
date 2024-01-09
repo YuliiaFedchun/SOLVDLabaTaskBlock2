@@ -1,7 +1,4 @@
-00:45:12.216 [main] XMLManager.main [31] INFO  - src/main/resources/flight.xml is valid: true
-00:45:12.236 [main] XMLManager.main [42] INFO  - Airline{name='KLM Royal Dutch Airlines', code='KLM', flightTypes='[REGULAR, CHARTER]', luggageTariff='LuggageTariff{handLuggagePrice=15.0, registerLuggagePrice=25.0}'}
-00:45:12.241 [main] XMLManager.main [47] INFO  - PlaneType{name='Boeing-737'seatsNumber='350'}
-00:45:12.243 [main] XMLManager.main [53] INFO  - Airport{name='Charles de Gaulle', city='Paris', country='France', typeName='international'}
-00:45:12.244 [main] XMLManager.main [54] INFO  - Airport{name='Heathrow', city='London', country='Great Britain', typeName='international'}
-00:45:12.246 [main] XMLManager.main [63] INFO  - Flight{number='0035', departureTime='2023-12-19 12:35:00', arrivalTime='2023-12-19 13:50:00', airline=Airline{name='KLM Royal Dutch Airlines', code='KLM', flightTypes='[REGULAR, CHARTER]', luggageTariff='LuggageTariff{handLuggagePrice=15.0, registerLuggagePrice=25.0}'}}
-00:45:12.401 [main] XMLManager.main [71] INFO  - FlightInfo{issueDate=2024-01-05, flight=Flight{number='0035', departureTime='2023-12-19 12:35:00', arrivalTime='2023-12-19 13:50:00', airline=Airline{name='KLM Royal Dutch Airlines', code='KLM', flightTypes='[REGULAR, CHARTER]', luggageTariff='LuggageTariff{handLuggagePrice=15.0, registerLuggagePrice=25.0}'}}, ticketsNumber=200}
+12:14:05.905 [main] JSONParser.main [19] INFO  - FlightInfo{issueDate=2024-01-05, flight=Flight{number='0035', departureTime='2023-12-19 12:35:00', arrivalTime='2023-12-19 13:50:00', airline=Airline{name='KLM Royal Dutch Airlines', code='KLM', flightTypes='[REGULAR, CHARTER]', luggageTariff='LuggageTariff{handLuggagePrice=15.0, registerLuggagePrice=25.0}'}}, ticketsNumber=200}
+12:14:05.908 [main] JSONParser.main [20] INFO  - Departure airport: Airport{name='Charles de Gaulle', city='Paris', country='France', typeName='international'}
+12:14:05.908 [main] JSONParser.main [21] INFO  - Arrival airport: Airport{name='Heathrow', city='London', country='Great Britain', typeName='international'}
+12:14:05.910 [main] JSONParser.main [22] INFO  - PlaneType{name='Boeing-737', seatsNumber='350'}

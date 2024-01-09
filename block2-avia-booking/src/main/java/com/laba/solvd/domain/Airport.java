@@ -1,5 +1,6 @@
 package com.laba.solvd.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.laba.solvd.domain.enums.AirportType;
 import com.laba.solvd.xml.jaxb.adapters.AirportTypeAdapter;
 import jakarta.xml.bind.annotation.XmlAccessType;
@@ -10,6 +11,7 @@ import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Airport {
+    @JsonIgnore
     @XmlTransient
     private long id;
     @XmlAttribute(name = "name")

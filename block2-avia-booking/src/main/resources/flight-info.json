@@ -1,0 +1,43 @@
+{
+  "issueDate" : "05-01-2024",
+  "flight" :
+  {
+    "number" : "0035",
+    "departureTime" : "2023-12-19 12:35:00",
+    "arrivalTime" : "2023-12-19 13:50:00",
+    "airline" :
+    {
+      "name" : "KLM Royal Dutch Airlines",
+      "code" : "KLM",
+      "flightTypes" : [
+        {"typeName" : "regular"},
+        {"typeName" : "charter"}
+      ],
+      "luggageTariff" :
+      {
+        "handLuggagePrice" : 15.0,
+        "registerLuggagePrice": 25.0
+      }
+    },
+    "departureAirport" :
+    {
+      "name" : "Charles de Gaulle",
+      "city" : "Paris",
+      "country" : "France",
+      "typeName" : "international"
+    },
+    "arrivalAirport" :
+    {
+      "name" : "Heathrow",
+      "city" : "London",
+      "country" : "Great Britain",
+      "typeName" : "international"
+    },
+    "planeType" :
+    {
+      "name" : "Boeing-737",
+      "seatsNumber" : 350
+    }
+  },
+  "ticketsNumber" : 200
+}

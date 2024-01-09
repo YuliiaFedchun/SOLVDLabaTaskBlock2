@@ -1,5 +1,6 @@
 package com.laba.solvd.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAttribute;
@@ -7,6 +8,7 @@ import jakarta.xml.bind.annotation.XmlTransient;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class PlaneType {
+    @JsonIgnore
     @XmlTransient
     private long id;
     @XmlAttribute(name = "name")
@@ -51,7 +53,7 @@ public class PlaneType {
     public String toString() {
         return "PlaneType{" +
                 "name='" + name + '\'' +
-                "seatsNumber='" + seatsNumber + '\'' +
+                ", seatsNumber='" + seatsNumber + '\'' +
                 '}';
     }
 }

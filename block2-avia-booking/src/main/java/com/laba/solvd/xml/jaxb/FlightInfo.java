@@ -1,6 +1,8 @@
 package com.laba.solvd.xml.jaxb;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.laba.solvd.domain.Flight;
+import com.laba.solvd.json.deserializers.DateDeserializer;
 import com.laba.solvd.xml.jaxb.adapters.DateAdapter;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
@@ -13,7 +15,7 @@ import java.time.LocalDate;
 @XmlRootElement(name = "flight-info")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class FlightInfo {
-
+    @JsonDeserialize(using = DateDeserializer.class)
     @XmlJavaTypeAdapter(DateAdapter.class)
     private LocalDate issueDate;
     private Flight flight;
@@ -25,7 +27,8 @@ public class FlightInfo {
         this.ticketsNumber = ticketsNumber;
     }
 
-    public FlightInfo() {}
+    public FlightInfo() {
+    }
 
     public LocalDate getIssueDate() {
         return issueDate;

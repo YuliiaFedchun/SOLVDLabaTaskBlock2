@@ -17,16 +17,16 @@ public class AirportHandler extends DefaultHandler {
         String country = null;
         AirportType airportType = null;
 
-        if(qName.equals("departureAirport") || qName.equals("arrivalAirport")) {
+        if (qName.equals("departureAirport") || qName.equals("arrivalAirport")) {
             name = attributes.getValue("name");
             city = attributes.getValue("city");
             country = attributes.getValue("country");
             airportType = AirportType.valueOf(attributes.getValue("typeName").toUpperCase());
         }
-        if(qName.equals("departureAirport")) {
+        if (qName.equals("departureAirport")) {
             departureAirport = new Airport(name, city, country, airportType);
         }
-        if(qName.equals("arrivalAirport")) {
+        if (qName.equals("arrivalAirport")) {
             arrivalAirport = new Airport(name, city, country, airportType);
         }
     }
@@ -35,7 +35,7 @@ public class AirportHandler extends DefaultHandler {
         return departureAirport;
     }
 
-    public Airport  getArrivalAirport() {
+    public Airport getArrivalAirport() {
         return arrivalAirport;
     }
 }
