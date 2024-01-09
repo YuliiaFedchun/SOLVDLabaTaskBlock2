@@ -18,9 +18,10 @@ public class ValidatorSAX {
 
     public static final String schemaName = "src/main/resources/flight.xsd";
     public static final String language = XMLConstants.W3C_XML_SCHEMA_NS_URI;
+
     public static boolean isValid(String fileName) {
         SchemaFactory schemaFactory = SchemaFactory.newInstance(language);
-        try{
+        try {
             Schema schema = schemaFactory.newSchema(new File(schemaName));
             Validator validator = schema.newValidator();
             Source source = new StreamSource(fileName);

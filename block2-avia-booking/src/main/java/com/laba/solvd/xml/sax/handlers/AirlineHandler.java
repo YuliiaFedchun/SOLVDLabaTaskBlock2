@@ -14,26 +14,27 @@ public class AirlineHandler extends DefaultHandler {
     private final List<FlightType> flightTypes = new ArrayList<>();
 
     @Override
-    public void startElement (String uri, String localName, String qName,
-                              Attributes attributes) {
-        if(qName.equals("airline")) {
+    public void startElement(String uri, String localName, String qName,
+                             Attributes attributes) {
+        if (qName.equals("airline")) {
             airline.setName(attributes.getValue("name"));
             airline.setCode(attributes.getValue("code"));
         }
-        if(qName.equals("flightType")) {
+        if (qName.equals("flightType")) {
             flightTypes.add(FlightType.valueOf(attributes.getValue("typeName").toUpperCase()));
         }
-        if(qName.equals("luggageTariff")) {
+        if (qName.equals("luggageTariff")) {
             double handLuggagePrice =
                     Double.parseDouble(attributes.getValue("handLuggagePrice"));
             double registerLuggagePrice =
                     Double.parseDouble(attributes.getValue("registerLuggagePrice"));
-            airline.setLuggageTariff(new LuggageTariff(handLuggagePrice,registerLuggagePrice));
+            airline.setLuggageTariff(new LuggageTariff(handLuggagePrice, registerLuggagePrice));
         }
     }
+
     @Override
     public void endElement(String uri, String localName, String qName) {
-        if(qName.equals("flightTypes")) {
+        if (qName.equals("flightTypes")) {
             airline.setFlightTypes(flightTypes);
         }
     }

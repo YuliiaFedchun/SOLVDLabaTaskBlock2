@@ -1,6 +1,9 @@
 package com.laba.solvd.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.laba.solvd.domain.enums.FlightType;
+import com.laba.solvd.json.deserializers.FlightTypeDeserializer;
 import com.laba.solvd.xml.jaxb.adapters.FlightTypeAdapter;
 import jakarta.xml.bind.annotation.*;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -10,6 +13,7 @@ import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Airline {
+    @JsonIgnore
     @XmlTransient
     private long id;
     @XmlAttribute(name = "name")
@@ -20,6 +24,7 @@ public class Airline {
     @XmlElementWrapper(name = "flightTypes")
     @XmlElement(name = "flightType")
     @XmlJavaTypeAdapter(FlightTypeAdapter.class)
+    @JsonDeserialize(using = FlightTypeDeserializer.class)
     private List<FlightType> flightTypes;
     private LuggageTariff luggageTariff;
 

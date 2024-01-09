@@ -9,9 +9,9 @@ public class PlaneTypeHandler extends DefaultHandler {
     private final PlaneType planeType = new PlaneType();
 
     @Override
-    public void startElement (String uri, String localName, String qName,
-                              Attributes attributes) {
-        if(qName.equals("planeType")) {
+    public void startElement(String uri, String localName, String qName,
+                             Attributes attributes) {
+        if (qName.equals("planeType")) {
             planeType.setName(attributes.getValue("name"));
             planeType.setSeatsNumber(Integer.parseInt(attributes.getValue("seatsNumber")));
         }

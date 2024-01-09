@@ -10,16 +10,16 @@ public class FlightHandler extends DefaultHandler {
 
     @Override
     public void startElement(String uri, String localName, String qName,
-                                Attributes attributes) {
-        if(qName.equals("number") || qName.equals("departureTime") ||
-                qName.equals("arrivalTime")){
+                             Attributes attributes) {
+        if (qName.equals("number") || qName.equals("departureTime") ||
+                qName.equals("arrivalTime")) {
             elementValue = new StringBuilder();
         }
     }
 
     @Override
     public void characters(char[] ch, int start, int length) {
-        if(elementValue == null) {
+        if (elementValue == null) {
             elementValue = new StringBuilder();
         } else {
             elementValue.append(ch, start, length);
@@ -29,11 +29,14 @@ public class FlightHandler extends DefaultHandler {
     @Override
     public void endElement(String uri, String localName, String qName) {
         switch (qName) {
-            case("number"): flight.setNumber(String.valueOf(elementValue));
+            case ("number"):
+                flight.setNumber(String.valueOf(elementValue));
                 break;
-            case("departureTime"): flight.setDepartureTime(String.valueOf(elementValue));
+            case ("departureTime"):
+                flight.setDepartureTime(String.valueOf(elementValue));
                 break;
-            case("arrivalTime"): flight.setArrivalTime(String.valueOf(elementValue));
+            case ("arrivalTime"):
+                flight.setArrivalTime(String.valueOf(elementValue));
                 break;
         }
     }

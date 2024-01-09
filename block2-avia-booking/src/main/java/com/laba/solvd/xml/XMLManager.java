@@ -23,10 +23,11 @@ import javax.xml.parsers.SAXParserFactory;
 import java.io.File;
 import java.io.IOException;
 
-public class XMLManager  {
+public class XMLManager {
     private static final Logger LOGGER = LogManager.getLogger(XMLManager.class);
     public static final String fileName1 = "src/main/resources/flight.xml";
-    public static final String fileName2 = "src/main/resources/flight-i nfo.xml";
+    public static final String fileName2 = "src/main/resources/flight-info.xml";
+
     public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException {
         LOGGER.info(fileName1 + " is valid: " + ValidatorSAX.isValid(fileName1));
 
