@@ -1,13 +1,13 @@
 package com.laba.solvd.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlTransient;
 
-import java.beans.Transient;
-
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Flight {
+    @JsonIgnore
     @XmlTransient
     private long id;
     private String number;
