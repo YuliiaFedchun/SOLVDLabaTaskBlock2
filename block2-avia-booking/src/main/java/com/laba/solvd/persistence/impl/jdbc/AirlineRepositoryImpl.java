@@ -1,4 +1,4 @@
-package com.laba.solvd.persistence.impl;
+package com.laba.solvd.persistence.impl.jdbc;
 
 import com.laba.solvd.domain.Airline;
 import com.laba.solvd.persistence.ConnectionPool;
@@ -21,7 +21,7 @@ public class AirlineRepositoryImpl implements AirlineRepository {
             preparedStatement.setString(2, airline.getCode());
             preparedStatement.setLong(3, luggageTariffId);
             preparedStatement.executeUpdate();
-            ResultSet resultSet = preparedStatement.getResultSet();
+            ResultSet resultSet = preparedStatement.getGeneratedKeys();
             while (resultSet.next()) {
                 airline.setId(resultSet.getLong(1));
             }

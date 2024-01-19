@@ -57,11 +57,13 @@ public class XMLManager {
         FlightHandler flightHandler = new FlightHandler();
         parser.parse(file1, flightHandler);
         Flight flight = flightHandler.getFlightInstance();
-        flight.setAirline(airline);
-        flight.setDepartureAirport(departureAirport);
-        flight.setArrivalAirport(arrivalAirport);
-        flight.setPlaneType(planeType);
-        LOGGER.info(flight.toString());
+        flight = Flight.builder(flight)
+                .airline(airline)
+                .departureAirport(departureAirport)
+                .arrivalAirport(arrivalAirport)
+                .planeType(planeType)
+                .build();
+        LOGGER.info(flight);
 
         //JAXB
         File file2 = new File(fileName2);

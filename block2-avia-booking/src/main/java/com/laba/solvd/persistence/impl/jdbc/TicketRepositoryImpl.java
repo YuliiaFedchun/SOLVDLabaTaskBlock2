@@ -1,4 +1,4 @@
-package com.laba.solvd.persistence.impl;
+package com.laba.solvd.persistence.impl.jdbc;
 
 import com.laba.solvd.domain.Ticket;
 import com.laba.solvd.persistence.ConnectionPool;
@@ -26,7 +26,7 @@ public class TicketRepositoryImpl implements TicketRepository {
             preparedStatement.setDouble(6, ticket.getPrice());
             preparedStatement.executeUpdate();
 
-            ResultSet resultSet = preparedStatement.getResultSet();
+            ResultSet resultSet = preparedStatement.getGeneratedKeys();
             while (resultSet.next()) {
                 ticket.setId(resultSet.getLong(1));
             }

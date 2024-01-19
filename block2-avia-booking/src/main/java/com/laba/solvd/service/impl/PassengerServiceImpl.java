@@ -2,11 +2,10 @@ package com.laba.solvd.service.impl;
 
 import com.laba.solvd.domain.Passenger;
 import com.laba.solvd.domain.Passport;
-import com.laba.solvd.persistence.MybatisConfig;
+import com.laba.solvd.persistence.repository.AbstractRepositoryFactory;
 import com.laba.solvd.persistence.repository.PassengerRepository;
 import com.laba.solvd.service.PassengerService;
 import com.laba.solvd.service.PassportService;
-import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
 
@@ -14,11 +13,10 @@ public class PassengerServiceImpl implements PassengerService {
     private final PassengerRepository passengerRepository;
     private final PassportService passportService;
 
-    public PassengerServiceImpl() {
-        //this.passengerRepository = new PassengerRepositoryImpl();
-        SqlSession sqlSession = MybatisConfig.getSessionFactory().openSession(true);
-        this.passengerRepository = sqlSession.getMapper(PassengerRepository.class);
-        this.passportService = new PassportServiceImpl();
+    public PassengerServiceImpl(String dbType, String type) {
+        this.passengerRepository = AbstractRepositoryFactory.createFactory(dbType)
+                .createPassengerRepository(type);
+        this.passportService = new PassportServiceImpl(dbType, type);
     }
 
     @Override
@@ -28,8 +26,8 @@ public class PassengerServiceImpl implements PassengerService {
         if (passenger.getPassport() != null) {
             Passport passport = passportService.create(passenger.getPassport());
             passenger.setPassport(passport);
+            passengerRepository.create(passenger, passport.getId());
         }
-        passengerRepository.create(passenger, passenger.getPassport().getId());
         return passenger;
     }
 

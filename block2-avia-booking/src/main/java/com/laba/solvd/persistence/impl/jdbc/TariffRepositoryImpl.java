@@ -1,4 +1,4 @@
-package com.laba.solvd.persistence.impl;
+package com.laba.solvd.persistence.impl.jdbc;
 
 import com.laba.solvd.domain.Tariff;
 import com.laba.solvd.persistence.ConnectionPool;
@@ -31,7 +31,7 @@ public class TariffRepositoryImpl implements TariffRepository {
             preparedStatement.setLong(8, serviceClassId);
             preparedStatement.setDouble(9, tariff.getBasePrice());
             preparedStatement.executeUpdate();
-            ResultSet resultSet = preparedStatement.getResultSet();
+            ResultSet resultSet = preparedStatement.getGeneratedKeys();
             while (resultSet.next()) {
                 tariff.setId(resultSet.getLong(1));
             }

@@ -1,4 +1,4 @@
-package com.laba.solvd.persistence.impl;
+package com.laba.solvd.persistence.impl.jdbc;
 
 import com.laba.solvd.domain.Passport;
 import com.laba.solvd.persistence.ConnectionPool;
@@ -6,7 +6,7 @@ import com.laba.solvd.persistence.repository.PassportRepository;
 
 import java.sql.*;
 
-public class PassportRepositoryImpl implements PassportRepository {
+public class PassportRepositoryJDBCImpl implements PassportRepository {
     private static final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
 
     @Override

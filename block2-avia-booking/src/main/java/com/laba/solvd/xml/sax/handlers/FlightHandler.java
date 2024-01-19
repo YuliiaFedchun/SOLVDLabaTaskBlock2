@@ -30,13 +30,19 @@ public class FlightHandler extends DefaultHandler {
     public void endElement(String uri, String localName, String qName) {
         switch (qName) {
             case ("number"):
-                flight.setNumber(String.valueOf(elementValue));
+                Flight.builder(flight)
+                        .number(String.valueOf(elementValue))
+                        .build();
                 break;
             case ("departureTime"):
-                flight.setDepartureTime(String.valueOf(elementValue));
+                Flight.builder(flight)
+                        .departureTime(String.valueOf(elementValue))
+                        .build();
                 break;
             case ("arrivalTime"):
-                flight.setArrivalTime(String.valueOf(elementValue));
+                Flight.builder(flight)
+                        .arrivalTime(String.valueOf(elementValue))
+                        .build();
                 break;
         }
     }

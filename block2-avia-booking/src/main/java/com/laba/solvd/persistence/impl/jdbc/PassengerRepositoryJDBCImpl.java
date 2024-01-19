@@ -1,4 +1,4 @@
-package com.laba.solvd.persistence.impl;
+package com.laba.solvd.persistence.impl.jdbc;
 
 import com.laba.solvd.domain.Passenger;
 import com.laba.solvd.persistence.ConnectionPool;
@@ -8,7 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PassengerRepositoryImpl implements PassengerRepository {
+public class PassengerRepositoryJDBCImpl implements PassengerRepository {
     private static final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
 
     @Override
@@ -27,7 +27,7 @@ public class PassengerRepositoryImpl implements PassengerRepository {
             preparedStatement.setString(5, passenger.getEmail());
             preparedStatement.setLong(6, passportId);
             preparedStatement.executeUpdate();
-            ResultSet resultSet = preparedStatement.getResultSet();
+            ResultSet resultSet = preparedStatement.getGeneratedKeys();
             while (resultSet.next()) {
                 passenger.setId(resultSet.getLong(1));
             }
