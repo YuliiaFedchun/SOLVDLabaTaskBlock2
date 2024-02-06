@@ -1,4 +1,4 @@
-package com.laba.solvd.persistence.impl;
+package com.laba.solvd.persistence.impl.jdbc;
 
 import com.laba.solvd.domain.Airport;
 import com.laba.solvd.persistence.ConnectionPool;
@@ -25,7 +25,7 @@ public class AirportRepositoryImpl implements AirportRepository {
             preparedStatement.setString(3, airport.getCountry());
             preparedStatement.setLong(4, airportTypeId);
             preparedStatement.executeUpdate();
-            ResultSet resultSet = preparedStatement.getResultSet();
+            ResultSet resultSet = preparedStatement.getGeneratedKeys();
             while (resultSet.next()) {
                 airport.setId(resultSet.getLong(1));
             }

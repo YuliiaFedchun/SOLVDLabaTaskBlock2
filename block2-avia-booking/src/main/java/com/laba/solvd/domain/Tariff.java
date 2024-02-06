@@ -26,6 +26,13 @@ public class Tariff {
         this.basePrice = basePrice;
     }
 
+    public Tariff(String name, Airline airline, ServiceClass serviceClass, double basePrice) {
+        this.name = name;
+        this.airline = airline;
+        this.serviceClass = serviceClass;
+        this.basePrice = basePrice;
+    }
+
     public Tariff() {
     }
 

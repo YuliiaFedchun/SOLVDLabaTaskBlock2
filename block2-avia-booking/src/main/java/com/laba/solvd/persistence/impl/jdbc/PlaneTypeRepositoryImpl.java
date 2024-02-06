@@ -1,4 +1,4 @@
-package com.laba.solvd.persistence.impl;
+package com.laba.solvd.persistence.impl.jdbc;
 
 import com.laba.solvd.domain.PlaneType;
 import com.laba.solvd.persistence.ConnectionPool;
@@ -21,7 +21,7 @@ public class PlaneTypeRepositoryImpl implements PlaneTypeRepository {
             preparedStatement.setString(1, planeType.getName());
             preparedStatement.setInt(2, planeType.getSeatsNumber());
             preparedStatement.executeUpdate();
-            ResultSet resultSet = preparedStatement.getResultSet();
+            ResultSet resultSet = preparedStatement.getGeneratedKeys();
             while (resultSet.next()) {
                 planeType.setId(resultSet.getLong(1));
             }

@@ -1,4 +1,4 @@
-package com.laba.solvd.persistence.impl;
+package com.laba.solvd.persistence.impl.jdbc;
 
 import com.laba.solvd.domain.LuggageTariff;
 import com.laba.solvd.persistence.ConnectionPool;
@@ -21,7 +21,7 @@ public class LuggageTariffRepositoryImpl implements LuggageTariffRepository {
             preparedStatement.setDouble(1, luggageTariff.getHandLuggagePrice());
             preparedStatement.setDouble(2, luggageTariff.getRegisterLuggagePrice());
             preparedStatement.executeUpdate();
-            ResultSet resultSet = preparedStatement.getResultSet();
+            ResultSet resultSet = preparedStatement.getGeneratedKeys();
             while (resultSet.next()) {
                 luggageTariff.setId(resultSet.getLong(1));
             }

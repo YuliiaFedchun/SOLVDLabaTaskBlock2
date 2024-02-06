@@ -1,4 +1,4 @@
-package com.laba.solvd.persistence.impl;
+package com.laba.solvd.persistence.impl.jdbc;
 
 import com.laba.solvd.domain.Flight;
 import com.laba.solvd.persistence.ConnectionPool;
@@ -29,9 +29,9 @@ public class FlightRepositoryImpl implements FlightRepository {
             preparedStatement.setLong(6, arrivalId);
             preparedStatement.setLong(7, planeTypeId);
             preparedStatement.executeUpdate();
-            ResultSet resultSet = preparedStatement.getResultSet();
+            ResultSet resultSet = preparedStatement.getGeneratedKeys();
             while (resultSet.next()) {
-                flight.setId(resultSet.getLong(1));
+                flight = Flight.builder(flight).id(resultSet.getLong(1)).build();
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -180,11 +180,12 @@ public class FlightRepositoryImpl implements FlightRepository {
         List<Flight> flights = new ArrayList<>();
         try {
             while (resultSet.next()) {
-                Flight flight = new Flight();
-                flight.setId(resultSet.getLong(1));
-                flight.setNumber(resultSet.getString(2));
-                flight.setDepartureTime(resultSet.getString(3));
-                flight.setArrivalTime(resultSet.getString(4));
+                Flight flight = Flight.builder(new Flight())
+                        .id(resultSet.getLong(1))
+                        .number(resultSet.getString(2))
+                        .departureTime(resultSet.getString(3))
+                        .arrivalTime(resultSet.getString(4))
+                        .build();
                 flights.add(flight);
             }
         } catch (SQLException e) {

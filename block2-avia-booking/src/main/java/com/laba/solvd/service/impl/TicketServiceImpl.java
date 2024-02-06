@@ -21,11 +21,11 @@ public class TicketServiceImpl implements TicketService {
     private final FlightService flightService;
     private final TariffService tariffService;
 
-    public TicketServiceImpl() {
+    public TicketServiceImpl(String dbType, String type) {
         //this.ticketRepository = new TicketRepositoryImpl();
         SqlSession sqlSession = MybatisConfig.getSessionFactory().openSession(true);
         this.ticketRepository = sqlSession.getMapper(TicketRepository.class);
-        this.passengerService = new PassengerServiceImpl();
+        this.passengerService = new PassengerServiceImpl(dbType, type);
         this.flightService = new FlightServiceImpl();
         this.tariffService = new TariffServiceImpl();
     }

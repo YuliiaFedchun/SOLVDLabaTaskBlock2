@@ -32,14 +32,15 @@ public class FlightServiceImpl implements FlightService {
 
     @Override
     public Flight create(Flight flight, Long airlineId, Long departureId, Long arrivalId) {
-        flight.setId(0);
+        flight = Flight.builder(flight).id(0).build();
         if (airlineService.findById(airlineId) != null) {
             if (airportService.findById(departureId) != null &&
                     airportService.findById(arrivalId) != null) {
-
-                flight.setAirline(airlineService.findById(airlineId));
-                flight.setDepartureAirport(airportService.findById(departureId));
-                flight.setArrivalAirport(airportService.findById(arrivalId));
+                flight = Flight.builder(flight)
+                        .airline(airlineService.findById(airlineId))
+                        .departureAirport(airportService.findById(departureId))
+                        .arrivalAirport(airportService.findById(arrivalId))
+                        .build();
             } else {
                 LOGGER.info("Incorrect departure or arrival");
             }
@@ -53,9 +54,8 @@ public class FlightServiceImpl implements FlightService {
                 planeType = planeTypeService.create(flight.getPlaneType());
             } else {
                 planeType = planeTypeService.findByName(flight.getPlaneType().getName());
-                flight.setPlaneType(planeType);
             }
-            flight.setPlaneType(planeType);
+            flight = Flight.builder(flight).planeType(planeType).build();
         }
         flightRepository.create(flight, airlineId, departureId, arrivalId,
                 flight.getPlaneType().getId());
@@ -65,10 +65,12 @@ public class FlightServiceImpl implements FlightService {
     @Override
     public Flight findById(Long flightId) {
         Flight flight = flightRepository.findById(flightId);
-        flight.setAirline(airlineService.findById(flightRepository.getAirlineId(flightId)));
-        flight.setDepartureAirport(airportService.findById(flightRepository.getDepartureId(flightId)));
-        flight.setArrivalAirport(airportService.findById(flightRepository.getArrivalId(flightId)));
-        flight.setPlaneType(planeTypeService.findById(flightRepository.getPlaneTypeId(flightId)));
+        flight = Flight.builder(flight)
+                .airline(airlineService.findById(flightRepository.getAirlineId(flightId)))
+                .departureAirport(airportService.findById(flightRepository.getDepartureId(flightId)))
+                .arrivalAirport(airportService.findById(flightRepository.getArrivalId(flightId)))
+                .planeType(planeTypeService.findById(flightRepository.getPlaneTypeId(flightId)))
+                .build();
         return flight;
     }
 

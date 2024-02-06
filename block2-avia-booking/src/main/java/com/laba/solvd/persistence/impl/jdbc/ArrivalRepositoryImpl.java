@@ -1,4 +1,4 @@
-package com.laba.solvd.persistence.impl;
+package com.laba.solvd.persistence.impl.jdbc;
 
 import com.laba.solvd.persistence.ConnectionPool;
 import com.laba.solvd.persistence.repository.ArrivalRepository;

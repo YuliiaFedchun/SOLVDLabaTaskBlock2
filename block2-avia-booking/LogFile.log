@@ -1,4 +1,8 @@
-12:14:05.905 [main] JSONParser.main [19] INFO  - FlightInfo{issueDate=2024-01-05, flight=Flight{number='0035', departureTime='2023-12-19 12:35:00', arrivalTime='2023-12-19 13:50:00', airline=Airline{name='KLM Royal Dutch Airlines', code='KLM', flightTypes='[REGULAR, CHARTER]', luggageTariff='LuggageTariff{handLuggagePrice=15.0, registerLuggagePrice=25.0}'}}, ticketsNumber=200}
-12:14:05.908 [main] JSONParser.main [20] INFO  - Departure airport: Airport{name='Charles de Gaulle', city='Paris', country='France', typeName='international'}
-12:14:05.908 [main] JSONParser.main [21] INFO  - Arrival airport: Airport{name='Heathrow', city='London', country='Great Britain', typeName='international'}
-12:14:05.910 [main] JSONParser.main [22] INFO  - PlaneType{name='Boeing-737', seatsNumber='350'}
+12:45:39.245 [main] Main.main [53] INFO  - Airline{name='Ryanair', code='RYR'}
+12:45:39.277 [main] Main.main [59] INFO  - Airport{name='Heathrow', city='London', country='United Kingdom', typeName='international'}
+12:45:39.353 [main] Main.main [66] INFO  - Flight{number='0141', departureTime='2023-12-24 16:10:00', arrivalTime='2023-12-24 17:45:00', airline=Airline{name='Ryanair', code='RYR'}}
+12:45:39.355 [main] AirportListener.onFlightCancellation [11] INFO  - The flight '555' was canceled
+12:45:39.356 [main] PassengerListener.onFlightCancellation [11] INFO  - Your flight '555' was canceled. You may choose another one or get your money back
+12:45:39.356 [main] Flight.cancel [58] INFO  - Flight '555' was cancelled.
+12:45:39.370 [main] BaseTariffMolder.modelTariff [18] INFO  - Base tariff was create: Tariff{name='Business Flex', handLuggage=1, registerLuggage=1, placeChoice=false, fastTrack=true, priorityBoarding=false, airline=Airline{name='LOT Polish Airlines', code='LOT'}, serviceClass=business, basePrice=150.0}
+12:45:39.370 [main] Main.main [88] INFO  - Tariff{name='Business Flex', handLuggage=1, registerLuggage=1, placeChoice=false, fastTrack=true, priorityBoarding=false, airline=Airline{name='LOT Polish Airlines', code='LOT'}, serviceClass=business, basePrice=150.0}
